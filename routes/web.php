@@ -22,3 +22,6 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/login', [LoginController::class,'index'])->name('login');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
