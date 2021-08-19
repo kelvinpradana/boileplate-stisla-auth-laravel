@@ -73,19 +73,16 @@
 									<div class="row">
 										<div class="form-group col-6">
 											<label>Kanwil</label>
-											<select class="form-control selectric">
-												<option>Indonesia</option>
-												<option>Palestine</option>
-												<option>Syria</option>
-												<option>Malaysia</option>
-												<option>Thailand</option>
+											<select class="form-control selectric" id="kanwil" name="kanwil">
+												@foreach($kanwils as $kanwil)
+												<option value="{{$kanwil->id}}">{{$kanwil->nama}}</option>
+												@endforeach
 											</select>
 										</div>
 										<div class="form-group col-6">
 											<label>Upt</label>
-											<select class="form-control selectric">
-												<option>West Java</option>
-												<option>East Java</option>
+											<select class="form-control" id="upts" name="upt">
+												<option>Pilih kanwil dulu</option>
 											</select>
 										</div>
 									</div>
@@ -143,6 +140,20 @@
 
 	<!-- Page Specific JS File -->
 	<script src="../assets/js/page/auth-register.js"></script>
+
+	<script type="text/javascript">
+        $("#kanwil").change(function(){
+			console.log('oke',$(this).val());
+            $.ajax({
+                url: "{{ route('kanwil.upt') }}?kanwil=" + $(this).val(),
+                method: 'GET',
+                success: function(data) {
+					console.log(data.html)
+                    $('#upts').html(data.html);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

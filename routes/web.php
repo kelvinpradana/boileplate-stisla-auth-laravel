@@ -25,3 +25,14 @@ Route::middleware('guest')->group(function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/upt', 'Auth\RegisterController@get_upt')->name('kanwil.upt');
+
+Route::name('transaksi')->prefix('/transaksi')->group(function () {
+    Route::get('/', 'TransaksiController@index');
+
+    Route::get('getSubDiklat', 'TransaksiController@getSubDiklat')->name('.getSubDiklat');
+    Route::get('getSubDiklatEdit', 'TransaksiController@getSubDiklatEdit')->name('.getSubDiklatEdit');
+    Route::post('/store', 'TransaksiController@store')->name('.store');
+
+});
