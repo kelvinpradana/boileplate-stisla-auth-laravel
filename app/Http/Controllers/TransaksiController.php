@@ -74,19 +74,28 @@ class TransaksiController extends Controller
         // ]);
         DB::beginTransaction();
         try {
-            $pelatihans = $request->pelatihan;
-            $jmls = array_filter($request->jml);
-            for($i=0;$i<count($pelatihans);$i++){
-                $pelatihan[] = [
-                    'diklat_id' =>  $request->diklat_id,
-                    'sub_diklat_id' => $pelatihans[$i],
-                    'jumlah' => $jmls[$i],
-                    'tahun' =>  $request->tahun,
-                    'status' =>  0,
-                    'user_id' => auth::user()->id
-                ];
+
+            transaksi::where("diklat_id", $request->diklat_id)->where('tahun',$request->tahun)
+            ->where('status',0) ->where('user_id',auth::user()->id)->delete();
+            $jmls = $request->jml;
+            $i=0;
+            for($y=0;$y<count($jmls);$y++){
+                
+                if($jmls[$y] != 0 || !empty($jmls[$y])){
+                    $pelatihans = $request->pelatihan;
+                    $pelatihan[] = [
+                        'diklat_id' =>  $request->diklat_id,
+                        'sub_diklat_id' => $pelatihans[$i],
+                        'jumlah' => $jmls[$y],
+                        'tahun' =>  $request->tahun,
+                        'status' =>  0,
+                        'user_id' => auth::user()->id
+                    ];
+                    $i++;
+                }
             }
             transaksi::insert($pelatihan);
+           
             DB::commit();
             return response()->json(['status' => 'success', 'message' => $request->jml]);
         } catch (Exception $e) {
