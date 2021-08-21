@@ -103,9 +103,49 @@ class TransaksiController extends Controller
             $user_id = auth::user()->id;
             $diklat_id = $request->diklat_id;
 
-            $transaksi = transaksi::where('user_id',$user_id)->where('diklat_id',$diklat_id);
+            $transaksi = transaksi::where('user_id',$user_id)
+                            ->where('diklat_id',$diklat_id)
+                            ->where('status',0);
             $transaksi->delete();
 
+            DB::commit();
+            return response()->json(['status' => 'success', 'message' => 'Berhasil direset....']);
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function saveAll(Request $request){
+        DB::beginTransaction();
+        try {
+
+            $user_id = auth::user()->id;
+
+            $transaksi = transaksi::where('user_id',$user_id)
+                            ->where('status',0);
+                            
+            $update = $transaksi->update([
+                'status' => 1
+            ]);
+            DB::commit();
+            return response()->json(['status' => 'success', 'message' => 'Berhasil disimpan....']);
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function resetAll(Request $request){
+        DB::beginTransaction();
+        try {
+
+            $user_id = auth::user()->id;
+
+            $transaksi = transaksi::where('user_id',$user_id)
+                            ->where('status',0);
+                            
+            $update = $transaksi->delete();
             DB::commit();
             return response()->json(['status' => 'success', 'message' => 'Berhasil direset....']);
         } catch (Exception $e) {

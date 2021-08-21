@@ -37,6 +37,8 @@ Route::name('transaksi')->prefix('/transaksi')->group(function () {
     Route::get('getSubDiklatEdit', 'TransaksiController@getSubDiklatEdit')->name('.getSubDiklatEdit');
     Route::post('/store', 'TransaksiController@store')->name('.store');
     Route::delete('/reset', 'TransaksiController@reset')->name('.reset');
+    Route::post('/saveall', 'TransaksiController@saveAll')->name('.saveall');
+    Route::delete('/resetall', 'TransaksiController@resetAll')->name('.resetall');
 
 });
 

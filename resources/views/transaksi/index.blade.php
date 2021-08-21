@@ -38,6 +38,10 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 text-center">
+                    <button class="btn btn-md btn-warning" onclick="ResetAll()"><i class="fas fa-trash"></i>&nbsp;Reset</button>
+                    <button class="btn btn-md btn-info" onclick="SaveAll()"><i class="fas fa-check"></i>&nbsp;Simpan</button>
+                </div>
                 {{-- </div> --}}
             </div>
             </div>
@@ -319,6 +323,51 @@
             dataType: "json",
             data: {
                 "diklat_id" : id,
+                "_token": "{{ csrf_token() }}",
+                "_method": "DELETE"
+            },
+            success(result) {
+                iziToast.success({
+                    title: result.status,
+                    message: result.message,
+                    position: 'topRight'
+                });
+                alert(result.message)
+            },
+            error(xhr, status, error) {
+                var err = eval('(' + xhr.responseText + ')');
+            },
+        });
+    }
+
+    function SaveAll(){
+        $.ajax({
+            url: "{{ route('transaksi.saveall') }}",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "_token": "{{ csrf_token() }}"
+            },
+            success(result) {
+                iziToast.success({
+                    title: result.status,
+                    message: result.message,
+                    position: 'topRight'
+                });
+                alert(result.message)
+            },
+            error(xhr, status, error) {
+                var err = eval('(' + xhr.responseText + ')');
+            },
+        });
+    }
+
+    function ResetAll(){
+        $.ajax({
+            url: "{{ route('transaksi.resetall') }}",
+            type: "POST",
+            dataType: "json",
+            data: {
                 "_token": "{{ csrf_token() }}",
                 "_method": "DELETE"
             },
