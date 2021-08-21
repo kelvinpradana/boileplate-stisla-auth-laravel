@@ -61,17 +61,9 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->input('permission');
-        // $this->validate($request, [
-        //     'name' => 'required|unique:roles,name',
-        //     'permission' => 'required',
-        //     'keterangan' => 'required'
-        // ], [
-        //     'name.required' => 'Nama tidak boleh kosong',
-        //     'name.unique' => 'Nama sudah ada',
-        //     'permission.required' => 'Permission tidak boleh kosong',
-        //     'keterangan.required' => 'Keterangan tidak boleh kosong'
-        // ]);
+        if(count($request->pelatihan)>3){
+            return response()->json(['status' => 'error', 'message' => 'Pilihan sub diklat maksimal 3!']);
+        }
         DB::beginTransaction();
         try {
 
@@ -97,7 +89,25 @@ class TransaksiController extends Controller
             transaksi::insert($pelatihan);
            
             DB::commit();
-            return response()->json(['status' => 'success', 'message' => $request->jml]);
+            return response()->json(['status' => 'success', 'message' => 'Berhasil disimpan....']);
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function reset(Request $request){
+        DB::beginTransaction();
+        try {
+
+            $user_id = auth::user()->id;
+            $diklat_id = $request->diklat_id;
+
+            $transaksi = transaksi::where('user_id',$user_id)->where('diklat_id',$diklat_id);
+            $transaksi->delete();
+
+            DB::commit();
+            return response()->json(['status' => 'success', 'message' => 'Berhasil direset....']);
         } catch (Exception $e) {
             DB::rollback();
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);

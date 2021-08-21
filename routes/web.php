@@ -36,6 +36,7 @@ Route::name('transaksi')->prefix('/transaksi')->group(function () {
     Route::get('getSubDiklat', 'TransaksiController@getSubDiklat')->name('.getSubDiklat');
     Route::get('getSubDiklatEdit', 'TransaksiController@getSubDiklatEdit')->name('.getSubDiklatEdit');
     Route::post('/store', 'TransaksiController@store')->name('.store');
+    Route::delete('/reset', 'TransaksiController@reset')->name('.reset');
 
 });
 

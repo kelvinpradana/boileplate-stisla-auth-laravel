@@ -14,19 +14,22 @@
             </div>
             <div class="card-body">
             <div class="row mt-4">
-                <div class="col-12 col-lg-8 offset-lg-2">
-                <div class="wizard-steps">
+                {{-- <div class="col-12 col-lg-8 offset-lg-2"> --}}
+                <div class="wizard-steps col-12">
                     @foreach($diklats as $diklat)
-                        <div class="wizard-step wizard-step">
+                        <div class="wizard-step wizard-step col-4">
                             <div class="wizard-step-icon">
                                 <!-- <i class="fas fa-tshirt"></i> -->
                             </div>
                             <div class="wizard-step-label">
                                 <a href="#" data-id='{{$diklat->id}}' onclick="OpenModalAdd(this)"> {{$diklat->nama}}</a>
                             </div>
+                            <div class="btn btn-group">
+                                <button class="btn btn-md btn-warning" data-id='{{$diklat->id}}' onclick="ResetSubDiklat(this)"><i class="fas fa-trash"></i></button>
+                            </div>
                         </div>
                     @endforeach
-                    <div class="wizard-step wizard-step">
+                    <div class="wizard-step wizard-step col-4">
                         <div class="wizard-step-icon">
                             <!-- <i class="fas fa-tshirt"></i> -->
                         </div>
@@ -35,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-                </div>
+                {{-- </div> --}}
             </div>
             </div>
         </div>
@@ -123,6 +126,7 @@
         var id = $(object).data('id');
         $("#diklat_id").val(id);
         $('#modal-add').modal('show');
+        $('#tables').empty();
         $.ajax({
             url: "{{route('transaksi.getSubDiklat')}}",
             type: "GET",
@@ -191,7 +195,7 @@
                                 console.log('hasil',edit_jmls[i]);
                                 // 
                                 var li = $('<tr><td><div class=""><input class="form-check-input pelatihan" onclick="handleClick(this,' + i + ')" type="checkbox" '+status+' name="' + nama_pelatihan[i] + '" value="' +pelatihan[i] + '" id="pelatihan' + pelatihan[i] + '"/>' +
-                                '<label for="' + nama_pelatihan[i] + '"></label></div></td><td><input name="jml[]" value="' +edit_jmls[i] + '" class="jml" id="jml' + i + '" type="text" disabled></td</tr>');
+                                '<label for="' + nama_pelatihan[i] + '"></label></div></td><td><input class="form-control" name="jml[]" value="' +edit_jmls[i] + '" class="jml" id="jml' + i + '" type="text" disabled></td</tr>');
                                 li.find('label').text(nama_pelatihan[i]);
                                 $('#tables').append(li);
                                 // 
@@ -290,6 +294,7 @@
                     message: result.message,
                     position: 'topRight'
                 });
+                alert(result.message)
             },
             error(xhr, status, error) {
                 var err = eval('(' + xhr.responseText + ')');
@@ -302,6 +307,32 @@
 
             //     })
             // }
+        });
+    }
+
+    function ResetSubDiklat(object){
+        var id = $(object).data('id');
+
+        $.ajax({
+            url: "{{ route('transaksi.reset') }}",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "diklat_id" : id,
+                "_token": "{{ csrf_token() }}",
+                "_method": "DELETE"
+            },
+            success(result) {
+                iziToast.success({
+                    title: result.status,
+                    message: result.message,
+                    position: 'topRight'
+                });
+                alert(result.message)
+            },
+            error(xhr, status, error) {
+                var err = eval('(' + xhr.responseText + ')');
+            },
         });
     }
 </script>
