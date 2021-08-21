@@ -14,22 +14,19 @@
             </div>
             <div class="card-body">
             <div class="row mt-4">
-                {{-- <div class="col-12 col-lg-8 offset-lg-2"> --}}
-                <div class="wizard-steps col-12">
+                <div class="wizard-steps">
                     @foreach($diklats as $diklat)
-                        <div class="wizard-step wizard-step col-4">
-                            <div class="wizard-step-icon">
-                                <!-- <i class="fas fa-tshirt"></i> -->
-                            </div>
+                        <div class="wizard-step">
                             <div class="wizard-step-label">
                                 <a href="#" data-id='{{$diklat->id}}' onclick="OpenModalAdd(this)"> {{$diklat->nama}}</a>
                             </div>
-                            <div class="btn btn-group">
+                            <div class="btn btn-group mt-5">
+                                <button class="btn btn-md btn-success" data-id='{{$diklat->id}}' onclick="OpenModalAdd(this)"><i class="fas fa-eye"></i></button>
                                 <button class="btn btn-md btn-warning" data-id='{{$diklat->id}}' onclick="ResetSubDiklat(this)"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
                     @endforeach
-                    <div class="wizard-step wizard-step col-4">
+                    <div class="wizard-step wizard-step">
                         <div class="wizard-step-icon">
                             <!-- <i class="fas fa-tshirt"></i> -->
                         </div>
@@ -68,6 +65,7 @@
                     </table>
                 
                 </div>
+                <span id="alert" class="text-danger text-center"></span>
             </div>
             <div class="modal-footer bg-whitesmoke br">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -131,6 +129,7 @@
         $("#diklat_id").val(id);
         $('#modal-add').modal('show');
         $('#tables').empty();
+        $('#alert').html('');
         $.ajax({
             url: "{{route('transaksi.getSubDiklat')}}",
             type: "GET",
@@ -268,50 +267,59 @@
                 pelatihans.push($(this).val());
             }
         });
+        if(pelatihans.length>3){
+            $('#alert').html('Pilihan Sub Diklat maksimal 3!')
+        }else{
+            $.ajax({
+                url: "{{ route('transaksi.store') }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "pelatihan": pelatihans,
+                    "tahun": tahun,
+                    "jml": jml,
+                    "diklat_id" : diklat_id,
+                    "_token": "{{ csrf_token() }}"
+                },
+                // beforeSend() {
+                //     $("input").attr('disabled', 'disabled');
+                //     $("button").attr('disabled', 'disabled');
+                // },
+                // complete() {
+                //     $("input").removeAttr('disabled', 'disabled');
+                //     $("button").removeAttr('disabled', 'disabled');
+                // },
+                success(result) {
+                    $("#form-add")[0].reset();
+                    $('#modal-add').modal('hide');
 
-        $.ajax({
-            url: "{{ route('transaksi.store') }}",
-            type: "POST",
-            dataType: "json",
-            data: {
-                "pelatihan": pelatihans,
-                "tahun": tahun,
-                "jml": jml,
-                "diklat_id" : diklat_id,
-                "_token": "{{ csrf_token() }}"
-            },
-            // beforeSend() {
-            //     $("input").attr('disabled', 'disabled');
-            //     $("button").attr('disabled', 'disabled');
-            // },
-            // complete() {
-            //     $("input").removeAttr('disabled', 'disabled');
-            //     $("button").removeAttr('disabled', 'disabled');
-            // },
-            success(result) {
-                $("#form-add")[0].reset();
-                $('#modal-add').modal('hide');
-                // getRole();
+                    if(result.status=='success'){
+                        iziToast.success({
+                            title: result.status,
+                            message: result.message,
+                            position: 'topRight'
+                        });
+                    }else{
+                        iziToast.error({
+                            title: result.status,
+                            message: result.message,
+                            position: 'topRight'
+                        });
+                    }
+                },
+                error(xhr, status, error) {
+                    var err = eval('(' + xhr.responseText + ')');
+                    // toastr.error(err.message);
+                },
+                // error: function(response) {
+                //     $.each(response.responseJSON.errors, function(key, value) {
+                //         $("input[name="+key+"]").addClass('is-invalid').after('<div class="invalid-feedback">'+value+'</div>');
+                //         $(".show-error").addClass('is-invalid').after('<div class="invalid-feedback">'+value+'</div>');
 
-                iziToast.success({
-                    title: result.status,
-                    message: result.message,
-                    position: 'topRight'
-                });
-                alert(result.message)
-            },
-            error(xhr, status, error) {
-                var err = eval('(' + xhr.responseText + ')');
-                // toastr.error(err.message);
-            },
-            // error: function(response) {
-            //     $.each(response.responseJSON.errors, function(key, value) {
-            //         $("input[name="+key+"]").addClass('is-invalid').after('<div class="invalid-feedback">'+value+'</div>');
-            //         $(".show-error").addClass('is-invalid').after('<div class="invalid-feedback">'+value+'</div>');
-
-            //     })
-            // }
-        });
+                //     })
+                // }
+            });
+        }
     }
 
     function ResetSubDiklat(object){
@@ -332,7 +340,6 @@
                     message: result.message,
                     position: 'topRight'
                 });
-                alert(result.message)
             },
             error(xhr, status, error) {
                 var err = eval('(' + xhr.responseText + ')');
@@ -349,12 +356,20 @@
                 "_token": "{{ csrf_token() }}"
             },
             success(result) {
-                iziToast.success({
-                    title: result.status,
-                    message: result.message,
-                    position: 'topRight'
-                });
-                alert(result.message)
+
+                if(result.status=='success'){
+                    iziToast.success({
+                        title: result.status,
+                        message: result.message,
+                        position: 'topRight'
+                    });
+                }else{
+                    iziToast.error({
+                        title: result.status,
+                        message: result.message,
+                        position: 'topRight'
+                    });
+                }
             },
             error(xhr, status, error) {
                 var err = eval('(' + xhr.responseText + ')');
@@ -377,7 +392,6 @@
                     message: result.message,
                     position: 'topRight'
                 });
-                alert(result.message)
             },
             error(xhr, status, error) {
                 var err = eval('(' + xhr.responseText + ')');

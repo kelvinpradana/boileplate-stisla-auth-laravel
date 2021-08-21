@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('node_modules/weathericons/css/weather-icons.min.css') }} ">
     <link rel="stylesheet" href="{{ asset('node_modules/weathericons/css/weather-icons-wind.min.css') }} ">
     <link rel="stylesheet" href="{{ asset('node_modules/summernote/dist/summernote-bs4.css') }} ">
+    <link rel="stylesheet" href="{{ asset('node_modules/izitoast/dist/css/iziToast.min.css') }} ">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">

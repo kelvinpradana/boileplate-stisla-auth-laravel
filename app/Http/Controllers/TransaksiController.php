@@ -61,9 +61,6 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        if(count($request->pelatihan)>3){
-            return response()->json(['status' => 'error', 'message' => 'Pilihan sub diklat maksimal 3!']);
-        }
         DB::beginTransaction();
         try {
 
@@ -123,9 +120,17 @@ class TransaksiController extends Controller
             $user_id = auth::user()->id;
 
             $transaksi = transaksi::where('user_id',$user_id)
-                            ->where('status',0);
-                            
-            $update = $transaksi->update([
+                            ->where('status',0)->groupBy('diklat_id')
+                            ->selectRaw('count(*) as num')
+                            ->get();
+            
+            if(count($transaksi)>3){
+                return response()->json(['status' => 'error', 'message' => 'Pilihan Diklat maksimal 3!']);
+            }
+                   
+            $update = transaksi::where('user_id',$user_id)
+                ->where('status',0);
+            $update = $update->update([
                 'status' => 1
             ]);
             DB::commit();
