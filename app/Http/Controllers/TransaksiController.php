@@ -13,7 +13,16 @@ class TransaksiController extends Controller
 {
     public function index()
     {
-        $diklats = diklat::all();
+        $user_id = auth::user()->id;
+        $diklats = DB::table('diklats')
+                ->select('diklats.*','transaksi.qty')
+                ->leftJoin(DB::raw(
+                    "(select count(*) as qty, diklat_id 
+                    from transaksis where user_id='$user_id' and status=0 group by diklat_id ) as transaksi"
+                    ), function($join){
+                        $join->on("diklats.id","=","transaksi.diklat_id");
+                    })
+                ->get();
         return view('transaksi.index',compact('diklats'));
     }
 

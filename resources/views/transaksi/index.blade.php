@@ -21,8 +21,10 @@
                                 <a href="#" data-id='{{$diklat->id}}' onclick="OpenModalAdd(this)"> {{$diklat->nama}}</a>
                             </div>
                             <div class="btn btn-group mt-5">
-                                <button class="btn btn-md btn-success" data-id='{{$diklat->id}}' onclick="OpenModalAdd(this)"><i class="fas fa-eye"></i></button>
+                                @if($diklat->qty>0)
+                                {{-- <button class="btn btn-md btn-info">{{ $diklat->qty }}</button> --}}
                                 <button class="btn btn-md btn-warning" data-id='{{$diklat->id}}' onclick="ResetSubDiklat(this)"><i class="fas fa-trash"></i></button>
+                                @endif
                             </div>
                         </div>
                     @endforeach
