@@ -103,3 +103,20 @@ Route::name('usulan')->prefix('/usulan')->group(function () {
     // Route::put('/{id}', 'Usulan@update')->name('.update');
     Route::delete('/', 'UsulanController@reset')->name('.delete');
 });
+//user
+Route::name('user')->prefix('/user')->group(function () {
+    Route::get('/', 'UserController@index')->name('.index');
+    Route::post('/', 'UserController@store');
+    Route::get('/data', 'UserController@data')->name('.data');
+    Route::get('/{id}/edit', 'UserController@edit')->name('.edit');
+    Route::put('/{id}', 'UserController@update')->name('.update');
+    Route::delete('/', 'UserController@destroy')->name('.delete');
+});
+
+//user
+Route::name('laporan')->prefix('/laporan')->group(function () {
+    Route::get('/', 'LaporanController@index')->name('.index');
+    Route::get('/data', 'LaporanController@data')->name('.data');
+    
+});
+

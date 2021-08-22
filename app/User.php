@@ -36,4 +36,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getKanwil()
+    {
+       return $this->belongsTo(kanwil::class,'kanwil_id','id');
+    }
+
+    public function getUp()
+    {
+       return $this->belongsTo(upt::class,'upt_id','id');
+    }
 }

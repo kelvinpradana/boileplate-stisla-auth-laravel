@@ -13,7 +13,7 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Master</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="layout-default.html">User</a></li>
+                    <li><a class="nav-link" href="{{route('user')}}">User</a></li>
                     <li><a class="nav-link" href="{{route('kanwil')}}">Kanwil</a></li>
                     <li><a class="nav-link" href="{{route('upt')}}">UPT</a></li>
                     <li><a class="nav-link" href="{{route('diklat')}}">Diklat</a></li>
@@ -32,7 +32,7 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i> <span>laporan</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="bootstrap-alert.html">Pelatihan</a></li>
+                       <li><a class="nav-link" href="{{route('laporan.index')}}">Ranking</a></li>
                 </ul>
             </li>
     </aside>

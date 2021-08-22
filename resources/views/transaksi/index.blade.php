@@ -5,7 +5,7 @@
 
 @endsection
 @section('body')
-@section('title','Dashboard')
+@section('title','Input Pelatihan')
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -62,6 +62,7 @@
                 </button>
             </div>
             <form method="POST" action="javascript:void(0)" id="form-add">
+            <input type="hidden" name="tahun" id="tahun" value="{{$tahun->tahun}}">
             <div class="modal-body">
                 @csrf
                 <input type="hidden" id="diklat_id">
@@ -134,6 +135,7 @@
     })
     function OpenModalAdd(object){
         var id = $(object).data('id');
+        var tahun  = $("#tahun").val();
         $("#diklat_id").val(id);
         $('#modal-add').modal('show');
         $('#tables').empty();
@@ -162,7 +164,7 @@
                     dataType: "json",
                     data: {
                         "id": id,
-                        "tahun" : '2021'
+                        "tahun" : tahun
                     },
                     success(response) {
                         $.each(response.data, function(key, value) {
@@ -260,7 +262,7 @@
         var form=$("body");
             form.find('.invalid-feedback').remove();
             form.find('.form-group .is-invalid').removeClass('is-invalid');
-        var tahun = 2021;
+        var tahun = $("#tahun").val();;
         var pelatihans = [];
         var diklat_id = $("#diklat_id").val();
         var jml = $('input[name^=jml]').map(function(idx, elem) {
@@ -303,6 +305,7 @@
                             message: result.message,
                             position: 'topRight'
                         });
+                        location.reload()
                     }else{
                         iziToast.error({
                             title: result.status,
@@ -344,6 +347,7 @@
                     message: result.message,
                     position: 'topRight'
                 });
+                location.reload()
             },
             error(xhr, status, error) {
                 var err = eval('(' + xhr.responseText + ')');
@@ -367,6 +371,7 @@
                         message: result.message,
                         position: 'topRight'
                     });
+                    location.reload()
                 }else{
                     iziToast.error({
                         title: result.status,
@@ -396,6 +401,7 @@
                     message: result.message,
                     position: 'topRight'
                 });
+                location.reload()
             },
             error(xhr, status, error) {
                 var err = eval('(' + xhr.responseText + ')');
