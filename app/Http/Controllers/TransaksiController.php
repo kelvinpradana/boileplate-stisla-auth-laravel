@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\diklat;
 use App\subDiklat;
+use App\usulan;
 use App\transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -166,5 +167,17 @@ class TransaksiController extends Controller
             DB::rollback();
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
+    }
+
+    function getUsulan(){
+        $user_id = auth::user()->id;
+        $usulans = usulan::where("user_id", $user_id)
+            ->get();
+
+        if (!$usulans) {
+            return response()->json(['status' => 'error', 'message' => 'gagal mendapatkan data', 'data' => '']);
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Berhasil mengambil data', 'datas' => $usulans]);
     }
 }

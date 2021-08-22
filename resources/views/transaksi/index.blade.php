@@ -91,10 +91,13 @@
             <form method="POST" action="javascript:void(0)" id="form-usulan">
             <div class="modal-body">
                 @csrf
-                <div class="form-group">
-                    <label>Nama</label>
-                    <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama" autocomplete="off">
+                {{-- <div class="form-group">
+                    <label>Usulan</label>
+                    <input type="text" class="form-control" name="usulan[]" id="usulan" placeholder="Usulan" autocomplete="off">    
+                </div> --}}
+                <div class="newRowJumlah">
                 </div>
+                <button class="addRowJumlah btn btn-info" type="button">Add Row</button>
             </div>
             <div class="modal-footer bg-whitesmoke br">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -236,10 +239,6 @@
             //     checkCSRFToken(err.message);
             // }
         });
-    }
-
-    function OpenModalUsulan(){
-        $('#modal-usulan').modal('show');
     }
 
     function handleClick(cb,val) {
@@ -400,6 +399,70 @@
             },
         });
     }
+
+    function OpenModalUsulan(){
+        $('#modal-usulan').modal('show');
+        $('.newRowJumlah').empty();
+        
+        $.ajax({
+            url: "{{ route('transaksi.getUsulan') }}",
+            type: "GET",
+            dataType: "json",
+            success(result) {
+                var html = '';      
+                var data = result.datas;
+                if(data.length>0){
+                    $.each(data, function(key,value) {
+                        html += '<div class="inputFormRow">'
+                        html += `<div class="form-group">
+                            <label>Usulan</label>
+                            <div class='input-group'>
+                                <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" value='${value.usulan}'>
+                                <input type="hidden" class="form-control m-input" name="id_usulan[]" placeholder="Usulan" value='${value.id}'>
+                                <div class="input-group-append">
+                                    <button id="removeRow" type="button" class="btn btn-danger"><span class="fa fa-trash"></span>Hapus</button>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+                }else{
+                    html += `<div class="form-group">
+                        <label>Usulan</label>
+                        <div class='input-group'>
+                            <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" >
+                            <div class="input-group-append">
+                                <button id="removeRow" type="button" class="btn btn-danger"><span class="fa fa-trash"></span>Hapus</button>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                }
+                $('.newRowJumlah').append(html);
+            }
+        })
+    }
+
+    $('.addRowJumlah').click(function () {
+        var html = '';      
+        html += '<div class="inputFormRow">'
+        html += `<div class="form-group">
+                    <label>Usulan</label>
+                    <div class='input-group'>
+                        <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" >
+                        <div class="input-group-append">
+                            <button id="removeRow" type="button" class="btn btn-danger"><span class="fa fa-trash"></span>Hapus</button>
+                        </div>
+                    </div>
+                </div>
+                `;
+        
+        $('.newRowJumlah').append(html);
+    });
+
+    // remove row
+    $(document).on('click', '#removeRow', function () {
+        $(this).closest('.inputFormRow').remove();
+    });
 </script>
 
 @endsection

@@ -39,6 +39,7 @@ Route::name('transaksi')->prefix('/transaksi')->group(function () {
     Route::delete('/reset', 'TransaksiController@reset')->name('.reset');
     Route::post('/saveall', 'TransaksiController@saveAll')->name('.saveall');
     Route::delete('/resetall', 'TransaksiController@resetAll')->name('.resetall');
+    Route::get('getUsulan', 'TransaksiController@getUsulan')->name('.getUsulan');
 
 });
 
