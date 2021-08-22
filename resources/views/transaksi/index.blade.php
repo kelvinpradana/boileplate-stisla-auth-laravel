@@ -425,7 +425,7 @@
                         html += '<div class="inputFormRow">'
                         html += `<div class="form-group">
                             <label>Usulan</label>
-                            <div class='input-group'>
+                            <div class='input-group inputRow'>
                                 <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" value='${value.usulan}'>
                                 <input type="hidden" class="form-control m-input" name="id_usulan[]" placeholder="Usulan" value='${value.id}'>
                                 <div class="input-group-append">
@@ -433,6 +433,7 @@
                                 </div>
                             </div>
                         </div>`;
+                        html += '</div>'
                     });
                 }else{
                     html += `<div class="form-group">
@@ -453,7 +454,7 @@
         html += '<div class="inputFormRow">'
         html += `<div class="form-group">
                     <label>Usulan</label>
-                    <div class='input-group'>
+                    <div class='input-group inputRow'>
                         <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" >
                         <div class="input-group-append">
                             <button id="removeRow" type="button" class="btn btn-danger"><span class="fa fa-trash"></span>Hapus</button>
@@ -461,13 +462,14 @@
                     </div>
                 </div>
                 `;
+        html += '</div>'
         
         $('.newRowJumlah').append(html);
     });
 
     // remove row
     $(document).on('click', '#removeRow', function () {
-        $(this).closest('.inputFormRow').remove();
+        $(this).closest('.inputRow').closest('.inputFormRow').remove();
     });
 
     $("#form-usulan").on("submit", function(e) {

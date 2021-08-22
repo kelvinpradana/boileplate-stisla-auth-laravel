@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\usulan;
+use App\prolat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use DB;
 use DataTables;
 
@@ -12,7 +14,6 @@ class UsulanController extends Controller
 {
     //
     public function store(Request $request){
-        
         DB::beginTransaction();
         try {
 
@@ -21,12 +22,14 @@ class UsulanController extends Controller
             $usulan = $request->usulan;
             $id = $request->id;
 
+            $tahun = prolat::where('status',1)->first()->tahun;
+
             $usulans = usulan::where('user_id',$user_id)->delete();;
             $i=0;
             for($y=0;$y<count($usulan);$y++){ 
                 $insert[] = [
                     'usulan' => $usulan[$i],
-                    'tahun' => '2021',
+                    'tahun' => $tahun,
                     'user_id' => $user_id
                 ];
                 $i++;
