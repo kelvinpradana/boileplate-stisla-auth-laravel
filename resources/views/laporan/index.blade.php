@@ -5,16 +5,13 @@
 <link rel="stylesheet" href="{{ asset('node_modules/izitoast/dist/css/iziToast.min.css') }}">
 @endsection
 @section('body')
-@section('title','Butuh Perbaikan Segera')
+@section('title','Ranking')
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div class="form-group row" style="margin-left: 1px;">
+                <!-- <div class="form-group row" style="margin-left: 1px;">
                 <div class="col-xs-2">
-                    <!-- <div class="form-group"> -->
-                        <!-- <label>Default Select</label>
-                        <br> -->
                         <select class="form-control" width="50px"  name="waktu" id="waktu">
                             <option value=''>Filter Tampil Hari</option>
                             <option value="2">H -2</option>
@@ -24,15 +21,15 @@
                             <option value="21">H -21</option>
                             
                         </select>
-                    <!-- </div> -->
                 </div>
-                </div>
+                </div> -->
                 <div class="table-responsive">
                       <table class="table table-striped" id="table">
                         <thead>
                             <tr>
                                 <th class="text-center"> No</th>
                                 <th>Diklat</th>
+                                <th>Pelatihan</th>
                                 <th>Pelatihan</th>
                             </tr>
                         </thead>
@@ -77,11 +74,15 @@ function GetData(id=null) {
                     "width": "5%"
                 },
                 {
-                    data: 'diklat_id',
+                    data: 'diklat',
                     "width": "20%"
                 },
                 {
-                    data: 'diklat_id',
+                    data: 'nama',
+                    "width": "20%"
+                },
+                {
+                    data: 'qty',
                     "width": "20%"
                 },
             ],
