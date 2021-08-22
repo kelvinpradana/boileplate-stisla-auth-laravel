@@ -29,12 +29,15 @@
                         </div>
                     @endforeach
                     <div class="wizard-step wizard-step">
-                        <div class="wizard-step-icon">
-                            <!-- <i class="fas fa-tshirt"></i> -->
-                        </div>
                         <div class="wizard-step-label">
                             <a href="#" onclick="OpenModalUsulan()"> Usulan</a>
                         </div>
+                        @if($usulans>0)
+                        <div class="btn btn-group mt-5">
+                            {{-- <button class="btn btn-md btn-info">{{ $diklat->qty }}</button> --}}
+                            <button class="btn btn-md btn-warning" onclick="ResetUsulan()"><i class="fas fa-trash"></i></button>
+                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-12 text-center">
@@ -88,7 +91,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="POST" action="javascript:void(0)" id="form-usulan">
+            <form method="POST" action="javascript:void(0)" id="form-usulan" enctype="multipart/form-data">
             <div class="modal-body">
                 @csrf
                 {{-- <div class="form-group">
@@ -430,9 +433,6 @@
                         <label>Usulan</label>
                         <div class='input-group'>
                             <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" >
-                            <div class="input-group-append">
-                                <button id="removeRow" type="button" class="btn btn-danger"><span class="fa fa-trash"></span>Hapus</button>
-                            </div>
                         </div>
                     </div>
                     `;
@@ -463,6 +463,65 @@
     $(document).on('click', '#removeRow', function () {
         $(this).closest('.inputFormRow').remove();
     });
+
+    $("#form-usulan").on("submit", function(e) {
+        e.preventDefault();
+        var form=$("body");
+            form.find('.invalid-feedback').remove();
+            form.find('.form-group .is-invalid').removeClass('is-invalid');
+        $.ajax({
+            url: "{{route('usulan')}}",
+            type: "POST",
+            dataType: "json",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            success(result) {
+                $("#form-usulan")[0].reset();
+                $('#modal-usulan').modal('hide');
+
+                if(result.status=='success'){
+                    iziToast.success({
+                        title: result.status,
+                        message: result.message,
+                        position: 'topRight'
+                    });
+                }else{
+                    iziToast.error({
+                        title: result.status,
+                        message: result.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error(xhr, status, error) {
+                var err = eval('(' + xhr.responseText + ')');
+                // toastr.error(err.message);
+            }
+        })
+    });
+
+    function ResetUsulan(){
+        $.ajax({
+            url: "{{ route('usulan') }}",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "_method": "DELETE"
+            },
+            success(result) {
+                iziToast.success({
+                    title: result.status,
+                    message: result.message,
+                    position: 'topRight'
+                });
+            },
+            error(xhr, status, error) {
+                var err = eval('(' + xhr.responseText + ')');
+            },
+        });
+    }
 </script>
 
 @endsection

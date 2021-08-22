@@ -24,7 +24,8 @@ class TransaksiController extends Controller
                         $join->on("diklats.id","=","transaksi.diklat_id");
                     })
                 ->get();
-        return view('transaksi.index',compact('diklats'));
+        $usulans = usulan::where('user_id',$user_id)->count();
+        return view('transaksi.index',compact('diklats','usulans'));
     }
 
     /**

@@ -40,6 +40,7 @@ Route::name('transaksi')->prefix('/transaksi')->group(function () {
     Route::post('/saveall', 'TransaksiController@saveAll')->name('.saveall');
     Route::delete('/resetall', 'TransaksiController@resetAll')->name('.resetall');
     Route::get('getUsulan', 'TransaksiController@getUsulan')->name('.getUsulan');
+    Route::post('/usulan', 'TransaksiController@storeUsulan')->name('.usulan');
 
 });
 
@@ -93,4 +94,12 @@ Route::name('prolat')->prefix('/prolat')->group(function () {
     Route::get('/{id}/edit', 'ProlatController@edit')->name('.edit');
     Route::put('/{id}', 'ProlatController@update')->name('.update');
     Route::delete('/', 'ProlatController@destroy')->name('.delete');
+});
+
+//prolat
+Route::name('usulan')->prefix('/usulan')->group(function () {
+    Route::get('/', 'UsulanController@index')->name('.index');
+    Route::post('/', 'UsulanController@store');
+    // Route::put('/{id}', 'Usulan@update')->name('.update');
+    Route::delete('/', 'UsulanController@reset')->name('.delete');
 });
