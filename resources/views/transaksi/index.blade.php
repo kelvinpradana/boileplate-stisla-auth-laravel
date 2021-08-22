@@ -14,15 +14,17 @@
             </div>
             <div class="card-body">
             <div class="row mt-4">
-                <div class="col-12 col-lg-8 offset-lg-2">
                 <div class="wizard-steps">
                     @foreach($diklats as $diklat)
-                        <div class="wizard-step wizard-step">
-                            <div class="wizard-step-icon">
-                                <!-- <i class="fas fa-tshirt"></i> -->
-                            </div>
+                        <div class="wizard-step">
                             <div class="wizard-step-label">
                                 <a href="#" data-id='{{$diklat->id}}' onclick="OpenModalAdd(this)"> {{$diklat->nama}}</a>
+                            </div>
+                            <div class="btn btn-group mt-5">
+                                @if($diklat->qty>0)
+                                {{-- <button class="btn btn-md btn-info">{{ $diklat->qty }}</button> --}}
+                                <button class="btn btn-md btn-warning" data-id='{{$diklat->id}}' onclick="ResetSubDiklat(this)"><i class="fas fa-trash"></i></button>
+                                @endif
                             </div>
                         </div>
                     @endforeach
@@ -35,7 +37,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 text-center">
+                    <button class="btn btn-md btn-warning" onclick="ResetAll()"><i class="fas fa-trash"></i>&nbsp;Reset</button>
+                    <button class="btn btn-md btn-info" onclick="SaveAll()"><i class="fas fa-check"></i>&nbsp;Simpan</button>
                 </div>
+                {{-- </div> --}}
             </div>
             </div>
         </div>
@@ -61,6 +67,7 @@
                     </table>
                 
                 </div>
+                <span id="alert" class="text-danger text-center"></span>
             </div>
             <div class="modal-footer bg-whitesmoke br">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -123,6 +130,8 @@
         var id = $(object).data('id');
         $("#diklat_id").val(id);
         $('#modal-add').modal('show');
+        $('#tables').empty();
+        $('#alert').html('');
         $.ajax({
             url: "{{route('transaksi.getSubDiklat')}}",
             type: "GET",
@@ -191,7 +200,7 @@
                                 console.log('hasil',edit_jmls[i]);
                                 // 
                                 var li = $('<tr><td><div class=""><input class="form-check-input pelatihan" onclick="handleClick(this,' + i + ')" type="checkbox" '+status+' name="' + nama_pelatihan[i] + '" value="' +pelatihan[i] + '" id="pelatihan' + pelatihan[i] + '"/>' +
-                                '<label for="' + nama_pelatihan[i] + '"></label></div></td><td><input name="jml[]" value="' +edit_jmls[i] + '" class="jml" id="jml' + i + '" type="text" disabled></td</tr>');
+                                '<label for="' + nama_pelatihan[i] + '"></label></div></td><td><input class="form-control" name="jml[]" value="' +edit_jmls[i] + '" class="jml" id="jml' + i + '" type="text" disabled></td</tr>');
                                 li.find('label').text(nama_pelatihan[i]);
                                 $('#tables').append(li);
                                 // 
@@ -260,31 +269,74 @@
                 pelatihans.push($(this).val());
             }
         });
+        if(pelatihans.length>3){
+            $('#alert').html('Pilihan Sub Diklat maksimal 3!')
+        }else{
+            $.ajax({
+                url: "{{ route('transaksi.store') }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "pelatihan": pelatihans,
+                    "tahun": tahun,
+                    "jml": jml,
+                    "diklat_id" : diklat_id,
+                    "_token": "{{ csrf_token() }}"
+                },
+                // beforeSend() {
+                //     $("input").attr('disabled', 'disabled');
+                //     $("button").attr('disabled', 'disabled');
+                // },
+                // complete() {
+                //     $("input").removeAttr('disabled', 'disabled');
+                //     $("button").removeAttr('disabled', 'disabled');
+                // },
+                success(result) {
+                    $("#form-add")[0].reset();
+                    $('#modal-add').modal('hide');
+
+                    if(result.status=='success'){
+                        iziToast.success({
+                            title: result.status,
+                            message: result.message,
+                            position: 'topRight'
+                        });
+                    }else{
+                        iziToast.error({
+                            title: result.status,
+                            message: result.message,
+                            position: 'topRight'
+                        });
+                    }
+                },
+                error(xhr, status, error) {
+                    var err = eval('(' + xhr.responseText + ')');
+                    // toastr.error(err.message);
+                },
+                // error: function(response) {
+                //     $.each(response.responseJSON.errors, function(key, value) {
+                //         $("input[name="+key+"]").addClass('is-invalid').after('<div class="invalid-feedback">'+value+'</div>');
+                //         $(".show-error").addClass('is-invalid').after('<div class="invalid-feedback">'+value+'</div>');
+
+                //     })
+                // }
+            });
+        }
+    }
+
+    function ResetSubDiklat(object){
+        var id = $(object).data('id');
 
         $.ajax({
-            url: "{{ route('transaksi.store') }}",
+            url: "{{ route('transaksi.reset') }}",
             type: "POST",
             dataType: "json",
             data: {
-                "pelatihan": pelatihans,
-                "tahun": tahun,
-                "jml": jml,
-                "diklat_id" : diklat_id,
-                "_token": "{{ csrf_token() }}"
+                "diklat_id" : id,
+                "_token": "{{ csrf_token() }}",
+                "_method": "DELETE"
             },
-            // beforeSend() {
-            //     $("input").attr('disabled', 'disabled');
-            //     $("button").attr('disabled', 'disabled');
-            // },
-            // complete() {
-            //     $("input").removeAttr('disabled', 'disabled');
-            //     $("button").removeAttr('disabled', 'disabled');
-            // },
             success(result) {
-                $("#form-add")[0].reset();
-                $('#modal-add').modal('hide');
-                // getRole();
-
                 iziToast.success({
                     title: result.status,
                     message: result.message,
@@ -293,15 +345,59 @@
             },
             error(xhr, status, error) {
                 var err = eval('(' + xhr.responseText + ')');
-                // toastr.error(err.message);
             },
-            // error: function(response) {
-            //     $.each(response.responseJSON.errors, function(key, value) {
-            //         $("input[name="+key+"]").addClass('is-invalid').after('<div class="invalid-feedback">'+value+'</div>');
-            //         $(".show-error").addClass('is-invalid').after('<div class="invalid-feedback">'+value+'</div>');
+        });
+    }
 
-            //     })
-            // }
+    function SaveAll(){
+        $.ajax({
+            url: "{{ route('transaksi.saveall') }}",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "_token": "{{ csrf_token() }}"
+            },
+            success(result) {
+
+                if(result.status=='success'){
+                    iziToast.success({
+                        title: result.status,
+                        message: result.message,
+                        position: 'topRight'
+                    });
+                }else{
+                    iziToast.error({
+                        title: result.status,
+                        message: result.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error(xhr, status, error) {
+                var err = eval('(' + xhr.responseText + ')');
+            },
+        });
+    }
+
+    function ResetAll(){
+        $.ajax({
+            url: "{{ route('transaksi.resetall') }}",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "_method": "DELETE"
+            },
+            success(result) {
+                iziToast.success({
+                    title: result.status,
+                    message: result.message,
+                    position: 'topRight'
+                });
+            },
+            error(xhr, status, error) {
+                var err = eval('(' + xhr.responseText + ')');
+            },
         });
     }
 </script>

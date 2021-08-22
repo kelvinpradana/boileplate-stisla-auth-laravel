@@ -13,7 +13,16 @@ class TransaksiController extends Controller
 {
     public function index()
     {
-        $diklats = diklat::all();
+        $user_id = auth::user()->id;
+        $diklats = DB::table('diklats')
+                ->select('diklats.*','transaksi.qty')
+                ->leftJoin(DB::raw(
+                    "(select count(*) as qty, diklat_id 
+                    from transaksis where user_id='$user_id' and status=0 group by diklat_id ) as transaksi"
+                    ), function($join){
+                        $join->on("diklats.id","=","transaksi.diklat_id");
+                    })
+                ->get();
         return view('transaksi.index',compact('diklats'));
     }
 
@@ -61,17 +70,6 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->input('permission');
-        // $this->validate($request, [
-        //     'name' => 'required|unique:roles,name',
-        //     'permission' => 'required',
-        //     'keterangan' => 'required'
-        // ], [
-        //     'name.required' => 'Nama tidak boleh kosong',
-        //     'name.unique' => 'Nama sudah ada',
-        //     'permission.required' => 'Permission tidak boleh kosong',
-        //     'keterangan.required' => 'Keterangan tidak boleh kosong'
-        // ]);
         DB::beginTransaction();
         try {
 
@@ -97,7 +95,73 @@ class TransaksiController extends Controller
             transaksi::insert($pelatihan);
            
             DB::commit();
-            return response()->json(['status' => 'success', 'message' => $request->jml]);
+            return response()->json(['status' => 'success', 'message' => 'Berhasil disimpan....']);
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function reset(Request $request){
+        DB::beginTransaction();
+        try {
+
+            $user_id = auth::user()->id;
+            $diklat_id = $request->diklat_id;
+
+            $transaksi = transaksi::where('user_id',$user_id)
+                            ->where('diklat_id',$diklat_id)
+                            ->where('status',0);
+            $transaksi->delete();
+
+            DB::commit();
+            return response()->json(['status' => 'success', 'message' => 'Berhasil direset....']);
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function saveAll(Request $request){
+        DB::beginTransaction();
+        try {
+
+            $user_id = auth::user()->id;
+
+            $transaksi = transaksi::where('user_id',$user_id)
+                            ->where('status',0)->groupBy('diklat_id')
+                            ->selectRaw('count(*) as num')
+                            ->get();
+            
+            if(count($transaksi)>3){
+                return response()->json(['status' => 'error', 'message' => 'Pilihan Diklat maksimal 3!']);
+            }
+                   
+            $update = transaksi::where('user_id',$user_id)
+                ->where('status',0);
+            $update = $update->update([
+                'status' => 1
+            ]);
+            DB::commit();
+            return response()->json(['status' => 'success', 'message' => 'Berhasil disimpan....']);
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function resetAll(Request $request){
+        DB::beginTransaction();
+        try {
+
+            $user_id = auth::user()->id;
+
+            $transaksi = transaksi::where('user_id',$user_id)
+                            ->where('status',0);
+                            
+            $update = $transaksi->delete();
+            DB::commit();
+            return response()->json(['status' => 'success', 'message' => 'Berhasil direset....']);
         } catch (Exception $e) {
             DB::rollback();
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
