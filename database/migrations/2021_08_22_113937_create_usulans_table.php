@@ -18,6 +18,7 @@ class CreateUsulansTable extends Migration
             $table->string('tahun');
             $table->string('usulan');
             $table->unsignedBigInteger('user_id');
+            $table->integer('status');
             $table->timestamps();
 
             // 

@@ -147,6 +147,13 @@ class TransaksiController extends Controller
             $update = $update->update([
                 'status' => 1
             ]);
+
+            $update2 = usulan::where('user_id',$user_id)
+                ->where('status',0);
+            $update2 = $update2->update([
+                'status' => 1
+            ]);
+            
             DB::commit();
             return response()->json(['status' => 'success', 'message' => 'Berhasil disimpan....']);
         } catch (Exception $e) {

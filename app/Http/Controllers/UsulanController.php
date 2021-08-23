@@ -14,6 +14,11 @@ class UsulanController extends Controller
 {
     //
     public function store(Request $request){
+        $validated = $request->validate([
+            'usulan' => 'required|array|max:10'
+        ],[
+            'usulan.max' => 'Maksimal 10 Usulan!'
+        ]);
         DB::beginTransaction();
         try {
 
@@ -30,7 +35,8 @@ class UsulanController extends Controller
                 $insert[] = [
                     'usulan' => $usulan[$i],
                     'tahun' => $tahun,
-                    'user_id' => $user_id
+                    'user_id' => $user_id,
+                    'status' => 0
                 ];
                 $i++;
             }
@@ -50,7 +56,7 @@ class UsulanController extends Controller
 
             $user_id = auth::user()->id;
 
-            $usulan = usulan::where('user_id',$user_id);
+            $usulan = usulan::where('user_id',$user_id,)->where('status',0);
             $usulan->delete();
 
             DB::commit();

@@ -316,6 +316,11 @@
                 },
                 error(xhr, status, error) {
                     var err = eval('(' + xhr.responseText + ')');
+                    iziToast.error({
+                        title: 'Error',
+                        message: err.message,
+                        position: 'topRight'
+                    });
                     // toastr.error(err.message);
                 },
                 // error: function(response) {
@@ -426,7 +431,7 @@
                         html += `<div class="form-group">
                             <label>Usulan</label>
                             <div class='input-group inputRow'>
-                                <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" value='${value.usulan}'>
+                                <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" value='${value.usulan}' autocomplete='off'>
                                 <input type="hidden" class="form-control m-input" name="id_usulan[]" placeholder="Usulan" value='${value.id}'>
                                 <div class="input-group-append">
                                     <button id="removeRow" type="button" class="btn btn-danger"><span class="fa fa-trash"></span>Hapus</button>
@@ -439,7 +444,7 @@
                     html += `<div class="form-group">
                         <label>Usulan</label>
                         <div class='input-group'>
-                            <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" >
+                            <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" autocomplete='off' >
                         </div>
                     </div>
                     `;
@@ -455,7 +460,7 @@
         html += `<div class="form-group">
                     <label>Usulan</label>
                     <div class='input-group inputRow'>
-                        <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" >
+                        <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" autocomplete='off'>
                         <div class="input-group-append">
                             <button id="removeRow" type="button" class="btn btn-danger"><span class="fa fa-trash"></span>Hapus</button>
                         </div>
@@ -504,7 +509,11 @@
             },
             error(xhr, status, error) {
                 var err = eval('(' + xhr.responseText + ')');
-                // toastr.error(err.message);
+                iziToast.error({
+                    title: 'Error',
+                    message: err.errors.usulan,
+                    position: 'topRight'
+                });
             }
         })
     });
@@ -527,7 +536,12 @@
             },
             error(xhr, status, error) {
                 var err = eval('(' + xhr.responseText + ')');
-            },
+                iziToast.error({
+                    title: 'Error',
+                    message: err.message,
+                    position: 'topRight'
+                });
+            }
         });
     }
 </script>
