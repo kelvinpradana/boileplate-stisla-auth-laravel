@@ -1,8 +1,10 @@
 <?php
 
+use App\carousel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\prolat;
+use App\setting;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +19,9 @@ use App\prolat;
 
 Route::get('/', function () {
     $prolat = prolat::where('status',1)->first();
-    return view('welcome',compact('prolat'));
+    $carousels = carousel::all();
+    $setting = setting::first();
+    return view('welcome',compact('prolat','carousels','setting'));
 });
 
 Route::middleware('guest')->group(function () {
@@ -118,5 +122,20 @@ Route::name('laporan')->prefix('/laporan')->group(function () {
     Route::get('/', 'LaporanController@index')->name('.index');
     Route::get('/data', 'LaporanController@data')->name('.data');
     
+});
+
+// carousel
+Route::name('carousel')->prefix('/carousel')->group(function () {
+    Route::get('/', 'CarouselController@index')->name('.index');
+    Route::get('/data', 'CarouselController@data')->name('.data');
+    Route::delete('/', 'CarouselController@destroy')->name('.delete');
+    Route::post('/', 'CarouselController@store');
+});
+
+Route::name('setting')->prefix('/setting')->group(function () {
+    Route::get('/', 'SettingController@index')->name('.index');
+    Route::get('/data', 'SettingController@data')->name('.data');
+    Route::delete('/', 'SettingController@destroy')->name('.delete');
+    Route::post('/', 'SettingController@store');
 });
 
