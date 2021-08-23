@@ -499,6 +499,7 @@
                         message: result.message,
                         position: 'topRight'
                     });
+                    location.reload()
                 }else{
                     iziToast.error({
                         title: result.status,
@@ -533,6 +534,7 @@
                     message: result.message,
                     position: 'topRight'
                 });
+                location.reload()
             },
             error(xhr, status, error) {
                 var err = eval('(' + xhr.responseText + ')');
