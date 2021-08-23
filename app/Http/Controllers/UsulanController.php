@@ -29,7 +29,7 @@ class UsulanController extends Controller
 
             $tahun = prolat::where('status',1)->first()->tahun;
 
-            $usulans = usulan::where('user_id',$user_id)->delete();;
+            $usulans = usulan::where('user_id',$user_id)->where('tahun',$tahun)->delete();
             $i=0;
             for($y=0;$y<count($usulan);$y++){ 
                 $insert[] = [
@@ -56,7 +56,9 @@ class UsulanController extends Controller
 
             $user_id = auth::user()->id;
 
-            $usulan = usulan::where('user_id',$user_id,)->where('status',0);
+            $tahun = prolat::where('status',1)->first()->tahun;
+
+            $usulan = usulan::where('user_id',$user_id,)->where('status',0)->where('tahun',$tahun);
             $usulan->delete();
 
             DB::commit();
