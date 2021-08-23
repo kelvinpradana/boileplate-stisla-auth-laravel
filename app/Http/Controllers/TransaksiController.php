@@ -109,6 +109,7 @@ class TransaksiController extends Controller
 
     public function reset(Request $request){
         DB::beginTransaction();
+        $tahun = prolat::where('status',1)->first()->tahun;
         try {
 
             $user_id = auth::user()->id;
@@ -116,7 +117,7 @@ class TransaksiController extends Controller
 
             $transaksi = transaksi::where('user_id',$user_id)
                             ->where('diklat_id',$diklat_id)
-                            ->where('status',0);
+                            ->where('status',0)->where('tahun',$tahun);
             $transaksi->delete();
 
             DB::commit();
@@ -128,12 +129,13 @@ class TransaksiController extends Controller
     }
 
     public function saveAll(Request $request){
+        $tahun = prolat::where('status',1)->first()->tahun;
         DB::beginTransaction();
         try {
 
             $user_id = auth::user()->id;
 
-            $transaksi = transaksi::where('user_id',$user_id)
+            $transaksi = transaksi::where('user_id',$user_id)->where('tahun',$tahun)
                             ->where('status',0)->groupBy('diklat_id')
                             ->selectRaw('count(*) as num')
                             ->get();
@@ -143,13 +145,13 @@ class TransaksiController extends Controller
             }
                    
             $update = transaksi::where('user_id',$user_id)
-                ->where('status',0);
+                ->where('status',0)->where('tahun',$tahun);
             $update = $update->update([
                 'status' => 1
             ]);
 
             $update2 = usulan::where('user_id',$user_id)
-                ->where('status',0);
+                ->where('status',0)->where('tahun',$tahun);
             $update2 = $update2->update([
                 'status' => 1
             ]);
@@ -163,15 +165,21 @@ class TransaksiController extends Controller
     }
 
     public function resetAll(Request $request){
+        $tahun = prolat::where('status',1)->first()->tahun;
         DB::beginTransaction();
         try {
 
             $user_id = auth::user()->id;
 
             $transaksi = transaksi::where('user_id',$user_id)
-                            ->where('status',0);
+                            ->where('status',0)->where('tahun',$tahun);
                             
             $update = $transaksi->delete();
+
+            $usulan = usulan::where('user_id',$user_id)
+                ->where('status',0)->where('tahun',$tahun);
+                $usulan->delete();
+
             DB::commit();
             return response()->json(['status' => 'success', 'message' => 'Berhasil direset....']);
         } catch (Exception $e) {
@@ -181,8 +189,9 @@ class TransaksiController extends Controller
     }
 
     function getUsulan(){
+        $tahun = prolat::where('status',1)->first()->tahun;
         $user_id = auth::user()->id;
-        $usulans = usulan::where("user_id", $user_id)
+        $usulans = usulan::where("user_id", $user_id)->where('status',0)->where('tahun',$tahun)
             ->get();
 
         if (!$usulans) {

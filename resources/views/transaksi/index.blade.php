@@ -190,13 +190,6 @@
                            //end tail
                             for (i = 0; i < pelatihan.length; i++) {
                                
-                                // if(in_array(pelatihan[i],edit_pelatihan)!= -1){
-                                //     status = "checked";
-                                // }
-                                console.log('aa',edit_pelatihan);
-                                // if(pelatihan.includes(edit_pelatihan[i])){
-                                //     status = "checked";
-                                // }
                                 if(edit_pelatihan.includes(pelatihan[i])){
                                     status = "checked";
                                    
@@ -204,22 +197,11 @@
                                 else {
                                     status = "";
                                 }
-
-                                console.log('hasil',edit_jmls[i]);
-                                // 
                                 var li = $('<tr><td><div class=""><input class="form-check-input pelatihan" onclick="handleClick(this,' + i + ')" type="checkbox" '+status+' name="' + nama_pelatihan[i] + '" value="' +pelatihan[i] + '" id="pelatihan' + pelatihan[i] + '"/>' +
-                                '<label for="' + nama_pelatihan[i] + '"></label></div></td><td><input class="form-control" name="jml[]" value="' +edit_jmls[i] + '" class="jml" id="jml' + i + '" type="text" disabled></td</tr>');
+                                '<label for="pelatihan' + pelatihan[i] + '"></label></div></td><td><input class="form-control" name="jml[]" value="' +edit_jmls[i] + '" class="jml" id="jml' + i + '" type="text" disabled></td</tr>');
                                 li.find('label').text(nama_pelatihan[i]);
                                 $('#tables').append(li);
-                                // 
-                                // var li = $('<div class="permissions"<li><input class="form-check-input permission" type="checkbox" '+status+' name="'+ pelatihan[i] + '" value="' + pelatihan[i] + '" id="pelatihan' + pelatihan[i] + '"/>' +
-                                //     '<label for="' + pelatihan[i] + '"></label></li><div>');
-                                // li.find('label').text(pelatihan[i]);
-                                // console.log('ai',pelatihan[i]);
-                                // var li = $('<tr><td><div class=""><input class="form-check-input pelatihan" onclick="handleClick(this,' + pelatihan[i] + ')" type="checkbox" name="' + pelatihan[i] + '" value="' +id[i] + '" id="pelatihan' + value.id + '"/>' +
-                                // '<label for="' + key + '"></label></div></td><td><input name="jml[]" class="jml" id="jml' + value.id + '" type="text" disabled></td</tr>');
-                                // li.find('label').text(value.nama);
-                                $('#tables').append(li);
+                               
                             }
                         }
                     },
@@ -250,9 +232,11 @@
         // console.log("Clicked, new value = ",cb.checked);
         if(cb.checked){
             $('#jml'+val).prop('disabled', false);
+            $('#jml'+val).val(1);
         }
         else{
             $('#jml'+val).prop('disabled', true);
+            $('#jml'+val).val(0);
         }
         var count = $('input[name="pelatihan"]:checked').length;
         console.log(count)
@@ -453,8 +437,9 @@
             }
         })
     }
-
+    var i = 0;
     $('.addRowJumlah').click(function () {
+        i++;
         var html = '';      
         html += '<div class="inputFormRow">'
         html += `<div class="form-group">
@@ -468,8 +453,12 @@
                 </div>
                 `;
         html += '</div>'
+        if(i == 10 || i>10){
+            alert('max usulan 10')
+        }else{
+            $('.newRowJumlah').append(html);
+        }
         
-        $('.newRowJumlah').append(html);
     });
 
     // remove row
