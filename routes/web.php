@@ -32,7 +32,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/upt', 'Auth\RegisterController@get_upt')->name('kanwil.upt');
+Route::get('/upts', 'Auth\RegisterController@get_upt')->name('kanwils.upt');
 
 Route::name('transaksi')->prefix('/transaksi')->group(function () {
     Route::get('/', 'TransaksiController@index');

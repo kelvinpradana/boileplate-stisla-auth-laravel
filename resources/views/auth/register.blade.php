@@ -34,7 +34,7 @@
 							</div>
 
 							<div class="card-body">
-								<form method="POST" action="{{ route('register') }}">
+								<form method="POST" action="{{  url('register') }}">
 									@csrf
 									<div class="form-group">
 										<label for="email">Nama</label>
@@ -74,6 +74,7 @@
 										<div class="form-group col-6">
 											<label>Kanwil</label>
 											<select class="form-control selectric" id="kanwil" name="kanwil">
+												<option>-kanwil-</option>
 												@foreach($kanwils as $kanwil)
 												<option value="{{$kanwil->id}}">{{$kanwil->nama}}</option>
 												@endforeach
@@ -145,7 +146,7 @@
         $("#kanwil").change(function(){
 			console.log('oke',$(this).val());
             $.ajax({
-                url: "{{ route('kanwil.upt') }}?kanwil=" + $(this).val(),
+                url: "{{ route('kanwils.upt') }}?kanwil=" + $(this).val(),
                 method: 'GET',
                 success: function(data) {
 					console.log(data.html)
