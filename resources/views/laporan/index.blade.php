@@ -26,7 +26,8 @@
                                 <th class="text-center"> No</th>
                                 <th>Diklat</th>
                                 <th>Pelatihan</th>
-                                <th>Pelatihan</th>
+                                <th>Jumlah</th>
+                                <th>Detail</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,6 +38,35 @@
         </div>
     </div>
 </div>
+</div>
+<!-- Modal Laporan -->
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-laporan">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detail Input <span id="txt-mesin"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive mt-4">
+                    <table class="table table-striped table-bordered" width='100%' id="table-laporan">
+                        <thead>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Nik</th>
+                            <th>Kanwil</th>
+                            <th>Upt</th>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 @section('bottom-script')
@@ -81,6 +111,10 @@ function GetData(id=null) {
                     data: 'qty',
                     "width": "20%"
                 },
+                {
+                    data: 'action',
+                    "width": "20%"
+                },
             ],
             fixedColumns: true,
         });
@@ -89,5 +123,28 @@ $("#waktu").change(function(){
     var id = $(this).val();
     GetData(id);
 });
+function Laporan(object){
+    var id = $(object).data('id')
+
+    var url = "{{ route('laporan.detail', ':id') }}";
+    url = url.replace(':id',id);
+
+    $('#modal-laporan').modal('show');
+
+    $('#table-laporan').DataTable({
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        ajax: url,
+        columns: [
+            {data: 'DT_RowIndex', name: 'no', "width": "5%", orderable: false, searchable: false},
+            {data: 'nama_user', name: 'nama_user', "width": "15%"},
+            {data: 'nik', name: 'nik', "width": "15%"},
+            {data: 'kanwil', name: 'kanwil', "width": "15%"},
+            {data: 'upt', name: 'upt', "width": "15%"},
+        ]
+    })
+}
+
 </script>
 @endsection

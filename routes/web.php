@@ -123,6 +123,8 @@ Route::middleware('auth')->group(function () {
     Route::name('laporan')->prefix('/laporan')->group(function () {
         Route::get('/', 'LaporanController@index')->name('.index');
         Route::get('/data', 'LaporanController@data')->name('.data');
+
+        Route::get('/detail/{id}', 'LaporanController@detail')->name('.detail');
         
     });
 

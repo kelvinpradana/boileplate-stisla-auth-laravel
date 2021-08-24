@@ -54,8 +54,6 @@
                 
                 <div id="navbar-collapse" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav mr-auto">
-                      
-
                       <li class="nav-item"><a class="nav-link" href="{{url('/login')}}">Login</a></li>
                       <li class="nav-item"><a class="nav-link" href="{{url('/register')}}">Register</a></li>
                       <li class="nav-item"><a class="nav-link" href="#">Prolat {{$prolat->tahun}}</a></li>
