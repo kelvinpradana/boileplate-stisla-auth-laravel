@@ -12,7 +12,8 @@ class LaporanController extends Controller
 {
     public function index()
     {
-        return view('laporan.index');
+        $diklats = diklat::all();
+        return view('laporan.index',compact('diklats'));
     }
 
     public function data(Request $request){
@@ -27,8 +28,12 @@ class LaporanController extends Controller
             ->leftJoin('diklats','diklats.id','transaksis.diklat_id')
             ->orderBy('qty','DESC')
             ->where('transaksis.status','1')
-            ->where('tahun',$tahun->tahun)
-            ->groupBy('transaksis.sub_diklat_id')
+            ->where('tahun',$tahun->tahun);
+           
+            if($request->id){
+                $data->where('transaksis.diklat_id',$request->id);
+            }
+            $data->groupBy('transaksis.sub_diklat_id')
             ->orderBy('qty','DESC')
             ->get();
             return Datatables::of($data)

@@ -10,19 +10,15 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <!-- <div class="form-group row" style="margin-left: 1px;">
+                <div class="form-group row" style="margin-left: 1px;">
                 <div class="col-xs-2">
                         <select class="form-control" width="50px"  name="waktu" id="waktu">
-                            <option value=''>Filter Tampil Hari</option>
-                            <option value="2">H -2</option>
-                            <option value="3">H -3</option>
-                            <option value="7">H -7</option>
-                            <option value="14">H -14</option>
-                            <option value="21">H -21</option>
-                            
+                            @foreach($diklats as $diklat)
+                                <option value="{{$diklat->id}}">{{$diklat->nama}}</option>
+                            @endforeach
                         </select>
                 </div>
-                </div> -->
+                </div>
                 <div class="table-responsive">
                       <table class="table table-striped" id="table">
                         <thead>
