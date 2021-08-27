@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-	<title>Register &mdash;</title>
+	<title>Register</title>
 
 	<!-- General CSS Files -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -49,7 +49,7 @@
 									</div>
 
 									<div class="form-group">
-										<label for="nik">NIk</label>
+										<label for="nik">NIP</label>
 										<input id="nik" type="text" class="form-control @error('nik') is-invalid @enderror" required name="nik" value="{{ old('nik') }}" autocomplete="nik" autofocus>
 
 										@error('nik')
@@ -111,11 +111,14 @@
 											Register
 										</button>
 									</div>
+									<div class="mt-5 text-muted text-center">
+										Sudah punya akun ? <a href="{{route('login')}}">Login</a>
+									</div>
 								</form>
 							</div>
 						</div>
 						<div class="simple-footer">
-							Copyright &copy; Stisla 2018
+							Copyright &copy;{{date('Y')}}
 						</div>
 					</div>
 				</div>

@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
         Route::get('getUsulan', 'TransaksiController@getUsulan')->name('.getUsulan');
         Route::post('/usulan', 'TransaksiController@storeUsulan')->name('.usulan');
 
+        Route::get('preview', 'TransaksiController@preview')->name('.preview');
+
     });
 
 

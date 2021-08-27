@@ -200,4 +200,28 @@ class TransaksiController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Berhasil mengambil data', 'datas' => $usulans]);
     }
+
+    public function preview(){
+            $tahun = prolat::where('status',1)->first();
+            $data = DB::table('transaksis')
+            ->select('sub_diklats.nama as pelatihan','diklats.nama as nama_diklat','transaksis.jumlah','transaksis.tahun')
+            ->leftJoin('sub_diklats','sub_diklats.id','transaksis.sub_diklat_id')
+            ->leftJoin('diklats','diklats.id','transaksis.diklat_id')
+            ->where('transaksis.status','0')
+            ->where('tahun',$tahun->tahun)
+            ->where('transaksis.user_id',auth::user()->id)
+
+            ->get();
+
+            // usulan
+            $usulan = 
+            DB::table('usulans as u')
+            ->select('u.usulan','u.jumlah')
+            ->where('u.status','0')
+            ->where('tahun',$tahun->tahun)
+            ->where('u.user_id',auth::user()->id)
+
+            ->get();
+            return response()->json(['status' => 'success', 'message' => 'Berhasil mengambil data', 'datas' => $data,'usulan'=> $usulan]);
+    }
 }

@@ -1,8 +1,5 @@
 @extends('layouts.app')
-
-
 @section('top-script')
-
 @endsection
 @section('body')
 @section('title','Input Pelatihan')
@@ -10,7 +7,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-            <h6>Silahkan pilih diklat maksimal 3 diklat</h6>
+            <h6>Silahkan pilih maksimal 5 Pelatihan</h6>
             </div>
             <div class="card-body">
             <div class="row mt-4">
@@ -41,8 +38,9 @@
                     </div>
                 </div>
                 <div class="col-12 text-center">
-                    <button class="btn btn-md btn-warning" onclick="ResetAll()"><i class="fas fa-trash"></i>&nbsp;Reset</button>
-                    <button class="btn btn-md btn-info" onclick="SaveAll()"><i class="fas fa-check"></i>&nbsp;Simpan</button>
+                <button class="btn btn-md btn-info" onclick="Preview()"><i class="fa fa-arrow-right"></i>&nbsp;Next</button>
+                    <!-- <button class="btn btn-md btn-warning" onclick="ResetAll()"><i class="fas fa-trash"></i>&nbsp;Reset</button>
+                    <button class="btn btn-md btn-info" onclick="SaveAll()"><i class="fas fa-check"></i>&nbsp;Simpan</button> -->
                 </div>
                 {{-- </div> --}}
             </div>
@@ -68,6 +66,10 @@
                 <input type="hidden" id="diklat_id">
                 <div class="form-group">
                     <table style="width: 100%;" class="table table-bordered" id='tables'>
+                        <tr bgcolor='#e3dcce'>
+                            <th>Pelatihan</th>
+                            <th>Jumlah Peserta</th>
+                        </tr>
                     </table>
                 
                 </div>
@@ -95,10 +97,6 @@
             <form method="POST" action="javascript:void(0)" id="form-usulan" enctype="multipart/form-data">
             <div class="modal-body">
                 @csrf
-                {{-- <div class="form-group">
-                    <label>Usulan</label>
-                    <input type="text" class="form-control" name="usulan[]" id="usulan" placeholder="Usulan" autocomplete="off">    
-                </div> --}}
                 <div class="newRowJumlah">
                 </div>
                 <button class="addRowJumlah btn btn-info" type="button">Add Row</button>
@@ -106,6 +104,43 @@
             <div class="modal-footer bg-whitesmoke br">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- preview -->
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-preview">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Preview</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="javascript:void(0)" id="form-add">
+            <div class="modal-body">
+                <table style="width: 100%;" class="table table-bordered" id='tables-p'>
+                    <tr>
+                        <th>Diklat</th>
+                        <th>Pelatihan</th>
+                        <th>Jumlah Peserta</th>
+                        <th>Prolat</th>
+                    </tr>
+                </table>
+                <table style="width: 100%;" class="table table-bordered" id='tables-u'>
+                    <tr>
+                        <th>Usulan</th>
+                        <th>Jumlah Peserta</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button class="btn btn-md btn-warning" onclick="ResetAll()"><i class="fas fa-trash"></i>&nbsp;Reset</button>
+                    <button class="btn btn-md btn-info" onclick="SaveAll()"><i class="fas fa-check"></i>&nbsp;Simpan</button>
             </div>
             </form>
         </div>
@@ -138,7 +173,10 @@
         var tahun  = $("#tahun").val();
         $("#diklat_id").val(id);
         $('#modal-add').modal('show');
-        $('#tables').empty();
+        if($('#tables').find("tr:not(:nth-child(1))")){
+            $('#tables').find("tr:not(:nth-child(1))").remove();
+        }
+       
         $('#alert').html('');
         $.ajax({
             url: "{{route('transaksi.getSubDiklat')}}",
@@ -188,6 +226,7 @@
                                }
                            }
                            //end tail
+                        //    <tr><th>Pelatihan</th><th>Jumlah Peserta</th></tr>
                             for (i = 0; i < pelatihan.length; i++) {
                                
                                 if(edit_pelatihan.includes(pelatihan[i])){
@@ -226,6 +265,51 @@
             //     checkCSRFToken(err.message);
             // }
         });
+    }
+
+    function Preview(object){
+        if($('#tables-p').find("tr:not(:nth-child(1))")){
+            $('#tables-p').find("tr:not(:nth-child(1))").remove();
+        }
+        if($('#tables-u').find("tr:not(:nth-child(1))")){
+            $('#tables-u').find("tr:not(:nth-child(1))").remove();
+        }
+        $('#modal-preview').modal('show');
+        $.ajax({
+            url: "{{route('transaksi.preview')}}",
+            type: "GET",
+            dataType: "json",
+            // data: {
+            //     "id": id,
+            // },
+            success(result) {
+                 $.each(result.datas, function(key,value) {
+                    // console.log(value);
+                    var li = $(`<tr>
+                                    <td>${value.nama_diklat}</td>
+                                    <td>${value.pelatihan}</td>
+                                    <td>${value.jumlah}</td>
+                                    <td>${value.tahun}</td>
+                                <tr>`);
+                    $('#tables-p').append(li);
+                    
+                });
+                $.each(result.usulan, function(key,value) {
+                    var li = $(`<tr>
+                                    <td>${value.usulan}</td>
+                                    <td>${value.jumlah}</td>
+                                <tr>`);
+                    $('#tables-u').append(li);
+                    
+                });
+            },
+            error(xhr, status, error) {
+                var err = eval('(' + xhr.responseText + ')');
+                notification(status, err.message);
+                checkCSRFToken(err.message);
+            }
+        });
+        
     }
 
     function handleClick(cb,val) {
@@ -413,22 +497,42 @@
                     $.each(data, function(key,value) {
                         html += '<div class="inputFormRow">'
                         html += `<div class="form-group">
-                            <label>Usulan</label>
-                            <div class='input-group inputRow'>
-                                <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" value='${value.usulan}' autocomplete='off'>
-                                <input type="hidden" class="form-control m-input" name="id_usulan[]" placeholder="Usulan" value='${value.id}'>
-                                <div class="input-group-append">
-                                    <button id="removeRow" type="button" class="btn btn-danger"><span class="fa fa-trash"></span>Hapus</button>
+                            <div class='input-group inputRow row'>
+                                <div class="form-group col-5">
+                                    <label>Usulan</label>
+                                    <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" value='${value.usulan}' autocomplete='off'>
+                                    <input type="hidden" class="form-control m-input" name="id_usulan[]" placeholder="Usulan" value='${value.id}'>
+                                    
+                                </div>
+                                <div class="form-group col-5">
+                                    <label>Jumlah Peserta</label>
+                                    <input type="text" class="form-control m-input" name="jumlah[]" placeholder="Jumlah Peserta" value='${value.jumlah}' autocomplete='off'>                                    
+                                </div>
+                                <div class="form-group col-2">
+                                    <label></label>
+                                    <div class="input-group-append">
+                                        <button style='margin-top:10px' id="removeRow" type="button" class="btn btn-danger"><span class="fa fa-trash"></span>Hapus</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>`;
                         html += '</div>'
                     });
                 }else{
-                    html += `<div class="form-group">
-                        <label>Usulan</label>
-                        <div class='input-group'>
-                            <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" autocomplete='off' >
+                    html += `<div class="row">
+                        <div class="form-group col-5">
+                            <label>Usulan</label>
+                            <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" autocomplete='off'>
+                        </div>
+                        <div class="form-group col-5">
+                            <label>Jumlah Peserta</label>
+                            <input type="text" class="form-control m-input" name="jumlah[]" placeholder="Jumlah Peserta" autocomplete='off'>
+                        </div>
+                        <div class="form-group col-2">
+                            <label></label>
+                            <div class="input-group-append">
+                                <button style='margin-top:10px' id="removeRow" type="button" class="btn btn-danger"><span class="fa fa-trash"></span>Hapus</button>
+                            </div>
                         </div>
                     </div>
                     `;
@@ -443,11 +547,21 @@
         var html = '';      
         html += '<div class="inputFormRow">'
         html += `<div class="form-group">
-                    <label>Usulan</label>
-                    <div class='input-group inputRow'>
-                        <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" autocomplete='off'>
-                        <div class="input-group-append">
-                            <button id="removeRow" type="button" class="btn btn-danger"><span class="fa fa-trash"></span>Hapus</button>
+                    
+                    <div class='input-group inputRow row'>
+                        <div class="form-group col-5">
+                            <label>Usulan</label>
+                            <input type="text" class="form-control m-input" name="usulan[]" placeholder="Usulan" autocomplete='off'>
+                        </div>
+                        <div class="form-group col-5">
+                            <label>Jumlah Peserta</label>
+                            <input type="text" class="form-control m-input" name="jumlah[]" placeholder="Jumlah Peserta" autocomplete='off'>
+                        </div>
+                        <div class="form-group col-2">
+                            <label></label>
+                            <div class="input-group-append">
+                                <button  style='margin-top:10px' id="removeRow" type="button" class="btn btn-danger"><span class="fa fa-trash"></span>Hapus</button>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -55,7 +55,7 @@
                         <thead>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Nik</th>
+                            <th>Nip</th>
                             <th>Kanwil</th>
                             <th>Upt</th>
                         </thead>

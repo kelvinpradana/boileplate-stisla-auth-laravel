@@ -78,7 +78,7 @@
                             belum punya akun ? <a href="{{route('register')}}">silahkan register</a>
                         </div>
                         <div class="simple-footer">
-                            Copyright &copy;
+                            Copyright &copy;{{date('Y')}}
                         </div>
                     </div>
                 </div>

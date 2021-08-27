@@ -25,17 +25,18 @@ class UsulanController extends Controller
             $user_id = auth::user()->id;
             
             $usulan = $request->usulan;
-            $id = $request->id;
+            $jumlah = $request->jumlah;
 
             $tahun = prolat::where('status',1)->first()->tahun;
 
-            $usulans = usulan::where('user_id',$user_id)->where('tahun',$tahun)->delete();
+            usulan::where('user_id',$user_id)->where('tahun',$tahun)->where('status',0)->delete();
             $i=0;
             for($y=0;$y<count($usulan);$y++){ 
                 $insert[] = [
                     'usulan' => $usulan[$i],
                     'tahun' => $tahun,
                     'user_id' => $user_id,
+                    'jumlah' => $jumlah[$i],
                     'status' => 0
                 ];
                 $i++;
