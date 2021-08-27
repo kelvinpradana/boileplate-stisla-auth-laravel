@@ -10,6 +10,7 @@ use App\transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use DataTables;
 
 class TransaksiController extends Controller
 {
@@ -223,5 +224,49 @@ class TransaksiController extends Controller
 
             ->get();
             return response()->json(['status' => 'success', 'message' => 'Berhasil mengambil data', 'datas' => $data,'usulan'=> $usulan]);
+    }
+
+    public function history(){
+        $tahuns = prolat::all();
+        return view('transaksi.history',compact('tahuns'));
+    }
+
+    public function historyData(Request $request){
+        $tahun = prolat::where('status',1)->first();
+        $data = DB::table('transaksis')
+        ->select('sub_diklats.nama as pelatihan','diklats.nama as nama_diklat','transaksis.jumlah',
+        'transaksis.tahun')
+        ->leftJoin('sub_diklats','sub_diklats.id','transaksis.sub_diklat_id')
+        ->leftJoin('diklats','diklats.id','transaksis.diklat_id')
+        ->where('transaksis.status','1')
+        ->where('transaksis.tahun',$tahun->tahun)
+        ->where('transaksis.user_id',auth::user()->id);
+        if($request->id){
+            $data->where('transaksis.tahun',$request->id);
+        }
+        $data->get();
+        return Datatables::of($data)
+                ->escapeColumns([])
+                ->addIndexColumn()
+                ->make(true);
+    }
+
+    public function historyDataUsulan(Request $request){
+        $tahun = prolat::where('status',1)->first();
+        $usulan = 
+        DB::table('usulans as u')
+        ->select('u.usulan','u.jumlah')
+        ->where('u.status','1')
+        ->where('tahun',$tahun->tahun)
+        ->where('u.user_id',auth::user()->id);
+
+        if($request->id){
+            $usulan->where('u.tahun',$request->id);
+        }
+        $usulan->get();
+        return Datatables::of($usulan)
+                ->escapeColumns([])
+                ->addIndexColumn()
+                ->make(true);
     }
 }

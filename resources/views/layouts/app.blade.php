@@ -11,10 +11,6 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     <!-- CSS Libraries -->
-    <link rel="stylesheet" href="{{ asset('node_modules/jqvmap/dist/jqvmap.min.css') }} ">
-    <link rel="stylesheet" href="{{ asset('node_modules/weathericons/css/weather-icons.min.css') }} ">
-    <link rel="stylesheet" href="{{ asset('node_modules/weathericons/css/weather-icons-wind.min.css') }} ">
-    <link rel="stylesheet" href="{{ asset('node_modules/summernote/dist/summernote-bs4.css') }} ">
     <link rel="stylesheet" href="{{ asset('node_modules/izitoast/dist/css/iziToast.min.css') }} ">
 
     <!-- Template CSS -->
@@ -83,14 +79,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="{{ asset('assets/js/stisla.js') }} "></script>
-
-    <!-- JS Libraies -->
-    <script src="{{ asset('node_modules/simpleweather/jquery.simpleWeather.min.js') }} "></script>
-    <script src="{{ asset('node_modules/chart.js/dist/Chart.min.js') }} "></script>
-    <script src="{{ asset('node_modules/jqvmap/dist/jquery.vmap.min.js') }} "></script>
-    <script src="{{ asset('node_modules/jqvmap/dist/maps/jquery.vmap.world.js') }} "></script>
-    <script src="{{ asset('node_modules/summernote/dist/summernote-bs4.js') }} "></script>
-    <script src="{{ asset('node_modules/chocolat/dist/js/jquery.chocolat.min.js') }} "></script>
 
     <!-- Template JS File -->
     <script src="{{ asset('assets/js/scripts.js ') }}"></script>

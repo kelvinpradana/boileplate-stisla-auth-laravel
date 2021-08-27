@@ -49,6 +49,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/usulan', 'TransaksiController@storeUsulan')->name('.usulan');
 
         Route::get('preview', 'TransaksiController@preview')->name('.preview');
+        
+        Route::get('history', 'TransaksiController@history')->name('.history');
+        Route::get('history_data', 'TransaksiController@historyData')->name('.historyData');
+        Route::get('history_data_usulan', 'TransaksiController@historyDataUsulan')->name('.historyDataUsulan');
+
+
 
     });
 
