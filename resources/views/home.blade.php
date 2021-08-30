@@ -63,7 +63,9 @@
         </div>
     </div> -->
     <div class="col-md-12 col-sm-12 col-xs-12">
-                <div id="welcome" style="font-size: 72px; text-align: center; color: rgb(176, 190, 197); font-weight: 100; font-family: Lato; padding: 193.625px 0px;">Selamat datang :)</div>
+        <div class="card">
+            <img src="{{asset('img/welcome.jpeg')}}" alt="" height="550px">
+        </div>
     </div>
 </div>
 @endsection

@@ -168,6 +168,16 @@
         //         update();
         // });
     })
+
+    function in_array(needle, haystack){
+        var found = 0;
+        for (var i=0, len=haystack.length;i<len;i++) {
+            if (haystack[i] == needle) return i;
+                found++;
+        }
+        return -1;
+    }
+
     function OpenModalAdd(object){
         var id = $(object).data('id');
         var tahun  = $("#tahun").val();
@@ -209,7 +219,7 @@
                             edit_pelatihan.push(value.sub_diklat_id);
                             edit_jml.push(value.jumlah);
                         });
-                        console.log(edit_jml);
+                        // console.log(edit_jml);
                         if (result['datas'] != null) {
                             var jml = pelatihan.length;
                             var status = "";
@@ -217,19 +227,20 @@
                             var z=0;
                             for (i = 0; i < pelatihan.length; i++) {
                               
-                               if(edit_pelatihan.includes(pelatihan[i])){
+                                if(in_array(pelatihan[i],edit_pelatihan)!= -1){
                                     edit_jmls.push(edit_jml[z]);
                                     z++;
-                               }
-                               else {
-                                    edit_jmls.push(0);
-                               }
-                           }
+                                }
+                                else {
+                                        edit_jmls.push(0);
+                                }
+                            }
                            //end tail
                         //    <tr><th>Pelatihan</th><th>Jumlah Peserta</th></tr>
                             for (i = 0; i < pelatihan.length; i++) {
                                
-                                if(edit_pelatihan.includes(pelatihan[i])){
+                                if(in_array(pelatihan[i],edit_pelatihan)!= -1){
+
                                     status = "checked";
                                    
                                 }

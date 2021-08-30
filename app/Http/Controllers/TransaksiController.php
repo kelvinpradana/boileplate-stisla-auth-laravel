@@ -141,8 +141,8 @@ class TransaksiController extends Controller
                             ->selectRaw('count(*) as num')
                             ->get();
             
-            if(count($transaksi)>3){
-                return response()->json(['status' => 'error', 'message' => 'Pilihan Diklat maksimal 3!']);
+            if(count($transaksi)>4){
+                return response()->json(['status' => 'error', 'message' => 'Pilihan Diklat maksimal 4!']);
             }
                    
             $update = transaksi::where('user_id',$user_id)
