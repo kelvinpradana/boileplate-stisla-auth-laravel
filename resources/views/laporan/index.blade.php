@@ -16,23 +16,41 @@
                             @foreach($diklats as $diklat)
                                 <option value="{{$diklat->id}}">{{$diklat->nama}}</option>
                             @endforeach
+                            <option value="usulan">Usulan</option>
+                            <option value="all">All</option>
                         </select>
                 </div>
+                <a href='#' id="print-btn" class="btn btn-md btn-primary"><i class='fa fa-print'></i>PDF</a>
                 </div>
                 <div class="table-responsive">
-                      <table class="table table-striped" id="table">
+                    <div id="ranking">
+                        <table class="table table-striped" id="table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"> No</th>
+                                    <th>Diklat</th>
+                                    <th>Pelatihan</th>
+                                    <th>Jumlah</th>
+                                    <th>Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- usulan -->
+                    <table class="table table-striped" id="table-u">
                         <thead>
                             <tr>
                                 <th class="text-center"> No</th>
-                                <th>Diklat</th>
-                                <th>Pelatihan</th>
-                                <th>Jumlah</th>
-                                <th>Detail</th>
+                                <th>Usulan</th>
+                                <th>Jumlah Pelatihan</th>
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
+                    <!-- end -->
                 </div>
             </div>
         </div>
@@ -81,6 +99,7 @@
 
 // get data
 function GetData(id=null) {
+    if(id == 'all' || id != 'usulan'){
         $("#table").dataTable({
             processing: true,
             serverSide: true,
@@ -118,9 +137,47 @@ function GetData(id=null) {
             ],
             fixedColumns: true,
         });
+    }
+    if (id == 'all' || id == 'usulan'){
+        // if (id == 'usulan'){
+        //     $('#ranking').empty();
+        // }
+        $("#table-u").dataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{route('transaksi.historyDataUsulan')}}",
+                data: {
+                    id: id
+                }
+            },
+            destroy: true,
+            scrollX: true,
+            scrollCollapse: true,
+            columns: [{
+                    data: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false,
+                    "width": "5%"
+                },
+                {
+                    data: 'usulan',
+                    "width": "20%"
+                },
+                {
+                    data: 'jumlah',
+                    "width": "20%"
+                },
+            ],
+            fixedColumns: true,
+        });
+    }
 }
 $("#waktu").change(function(){
     var id = $(this).val();
+    var url = "{{ route('laporan.print', ':id') }}";
+    url = url.replace(':id',id);
+    $('#print-btn').attr("href", url);
     GetData(id);
 });
 function Laporan(object){

@@ -133,6 +133,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/data', 'LaporanController@data')->name('.data');
 
         Route::get('/detail/{id}', 'LaporanController@detail')->name('.detail');
+
+        Route::get('/print/{id}', 'LaporanController@print')->name('.print');
         
     });
 

@@ -143,7 +143,7 @@ function GetData(id=null) {
             ajax: {
                 url: "{{route('transaksi.historyDataUsulan')}}",
                 data: {
-                    id: id
+                    tahun: id
                 }
             },
             destroy: true,

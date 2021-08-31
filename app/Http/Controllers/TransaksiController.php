@@ -257,11 +257,13 @@ class TransaksiController extends Controller
         DB::table('usulans as u')
         ->select('u.usulan','u.jumlah')
         ->where('u.status','1')
-        ->where('tahun',$tahun->tahun)
-        ->where('u.user_id',auth::user()->id);
+        ->where('tahun',$tahun->tahun);
+        if(empty($request->id)){
+            $usulan->where('u.user_id',auth::user()->id);
+        }
 
-        if($request->id){
-            $usulan->where('u.tahun',$request->id);
+        if($request->tahun){
+            $usulan->where('u.tahun',$request->tahun);
         }
         $usulan->get();
         return Datatables::of($usulan)

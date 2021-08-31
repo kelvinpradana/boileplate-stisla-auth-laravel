@@ -77,4 +77,9 @@ class LaporanController extends Controller
                 ->make(true);
         }
     }
+
+    public function print(Request $request, $id)
+    {
+        return $id;
+    }
 }
