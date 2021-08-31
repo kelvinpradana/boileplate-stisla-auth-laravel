@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\diklat;
 use App\prolat;
+use App\transaksi;
 use Illuminate\Http\Request;
 use DB;
 use DataTables;
+use PDF;
 
 class LaporanController extends Controller
 {
@@ -30,7 +32,7 @@ class LaporanController extends Controller
             ->where('transaksis.status','1')
             ->where('tahun',$tahun->tahun);
            
-            if($request->id){
+            if($request->id != 'all'){
                 $data->where('transaksis.diklat_id',$request->id);
             }
             $data->groupBy('transaksis.sub_diklat_id')
@@ -80,6 +82,20 @@ class LaporanController extends Controller
 
     public function print(Request $request, $id)
     {
-        return $id;
+        $pelatihan = DB::table('transaksis as t')
+        ->select('sub_diklats.nama as pelatihan','diklats.nama as nama_diklat','t.jumlah','t.tahun',
+        'users.name as nama_user','users.kanwil_id','kanwils.nama as kanwil','upts.nama as upt','users.nik'
+        )
+        ->leftJoin('sub_diklats','sub_diklats.id','t.sub_diklat_id')
+        ->leftJoin('diklats','diklats.id','t.diklat_id')
+        ->leftJoin('users','users.id','t.user_id')
+        ->leftJoin('kanwils','kanwils.id','users.kanwil_id')
+        ->leftJoin('upts','upts.id','users.upt_id')
+        ->where('t.status','1')
+        ->where('t.diklat_id',$id)
+        ->get();
+        $pdf = PDF::loadview('laporan.laporan_pdf',['pelatihan'=>$pelatihan]);
+        return $pdf->stream('laporan.pdf');
+	    // return $pdf->download('laporan-pdf');
     }
 }

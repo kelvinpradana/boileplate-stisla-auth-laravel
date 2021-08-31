@@ -20,37 +20,17 @@
                             <option value="all">All</option>
                         </select>
                 </div>
-                <a href='#' id="print-btn" class="btn btn-md btn-primary"><i class='fa fa-print'></i>PDF</a>
+                <div class="col-lg-12">
+                <a href='#' target='_blank' id="print-btn" class="btn btn-md btn-primary float-right"><i class='fa fa-print'></i>PDF</a>
                 </div>
-                <div class="table-responsive">
-                    <div id="ranking">
-                        <table class="table table-striped" id="table">
-                            <thead>
-                                <tr>
-                                    <th class="text-center"> No</th>
-                                    <th>Diklat</th>
-                                    <th>Pelatihan</th>
-                                    <th>Jumlah</th>
-                                    <th>Detail</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- usulan -->
-                    <table class="table table-striped" id="table-u">
-                        <thead>
-                            <tr>
-                                <th class="text-center"> No</th>
-                                <th>Usulan</th>
-                                <th>Jumlah Pelatihan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                    <!-- end -->
+                </div>
+                <div id='pemisah1'></div>
+                <div id="ranking">
+                    
+                </div>
+                <div id='pemisah'></div>
+                <div id='usulans'>
+                   
                 </div>
             </div>
         </div>
@@ -100,6 +80,33 @@
 // get data
 function GetData(id=null) {
     if(id == 'all' || id != 'usulan'){
+        if(id != 'usulan'){
+            $('#usulans').empty();
+        }
+        if(id == 'all'){
+            $('#pemisah1').html(`
+                    <hr>
+                    <div class="section-header">
+                        <center><b><h5>Pelatihan</h5></b></center>
+                    </div>
+                    <hr>
+            `)
+        }
+        $('#ranking').html(`
+            <table class="table table-striped" id="table">
+                <thead>
+                    <tr>
+                        <th class="text-center"> No</th>
+                        <th>Diklat</th>
+                        <th>Pelatihan</th>
+                        <th>Jumlah</th>
+                        <th>Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        `)
         $("#table").dataTable({
             processing: true,
             serverSide: true,
@@ -139,9 +146,32 @@ function GetData(id=null) {
         });
     }
     if (id == 'all' || id == 'usulan'){
-        // if (id == 'usulan'){
-        //     $('#ranking').empty();
-        // }
+        if (id == 'usulan'){
+            $('#ranking').empty();
+        }
+        if(id == 'all'){
+            $('#pemisah').html(`
+                <br>
+                    <hr>
+                    <div class="section-header">
+                        <center><b><h5>Usulan</h5></b></center>
+                    </div>
+                    <hr>
+            `)
+        }
+        $('#usulans').html(`
+            <table class="table table-striped" id="table-u">
+                        <thead>
+                            <tr>
+                                <th class="text-center"> No</th>
+                                <th>Usulan</th>
+                                <th>Jumlah Pelatihan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+            </table>
+        `)
         $("#table-u").dataTable({
             processing: true,
             serverSide: true,
