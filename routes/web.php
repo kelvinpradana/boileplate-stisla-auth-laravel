@@ -20,7 +20,7 @@ use App\setting;
 Route::get('/', function () {
     $prolat = prolat::where('status',1)->first();
     $carousels = carousel::all();
-    $setting = setting::first();
+    $setting = setting::get();
     return view('welcome',compact('prolat','carousels','setting'));
 });
 

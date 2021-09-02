@@ -10,211 +10,45 @@
     <meta name="author" content="">
 
     <title>Fame - One Page Multipurpose Bootstrap Theme</title>
-    <style>
-.nav-bar {
-  height: 70px;
-  background: #262626;
-}
- 
-.brand {
-  position: absolute;
-  padding-left: 20px;
-  float: left;
-  line-height: 70px;
-  text-transform: uppercase;
-  font-size: 1.4em;
-  /* margin-left: 100px; */
-}
-.brand a img {
- max-height: 70px;
-}
-.brand a,
-.brand a:visited {
-  color: #ffffff;
-  text-decoration: none;
-}
- 
-.nav-container {
-  max-width: 1000px;
-  margin: 0 auto;
-}
- 
-nav {
-  float: right;
-}
-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-nav ul li {
-  float: left;
-  position: relative;
-}
-nav ul li a,
-nav ul li a:visited {
-  display: block;
-  padding: 0 20px;
-  line-height: 70px;
-  background: #262626;
-  color: #ffffff;
-  text-decoration: none;
-}
-nav ul li a:hover,
-nav ul li a:visited:hover {
-  background: #2ab1ce;
-  color: #ffffff;
-}
-nav ul li a:not(:only-child):after,
-nav ul li a:visited:not(:only-child):after {
-  padding-left: 4px;
-  content: ' ▾';
-}
-nav ul li ul li {
-  min-width: 190px;
-}
-nav ul li ul li a {
-  padding: 15px;
-  line-height: 20px;
-}
- 
-.nav-dropdown {
-  position: absolute;
-  display: none;
-  z-index: 1;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
-}
-.nav-mobile {
-  display: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: #262626;
-  height: 70px;
-  width: 70px;
-}
- 
-@media only screen and (max-width: 798px) {
-  .nav-mobile {
-    display: block;
-  }
- 
-  nav {
-    width: 100%;
-    padding: 70px 0 15px;
-  }
-  nav ul {
-    display: none;
-  }
-  nav ul li {
-    float: none;
-  }
-  nav ul li a {
-    padding: 15px;
-    line-height: 20px;
- padding-left: 25%;
- 
-  }
-  nav ul li ul li a {
-    padding-left: 30%;
-  }
- 
-  .nav-dropdown {
-    position: static;
-  }
- .brand a img {
- max-height: 60px;
- margin-top: 5px;
- }
-}
-@media screen and (min-width: 799px) {
-  .nav-list {
-    display: block !important;
-  }
-}
-#nav-toggle {
-  position: absolute;
-  left: 18px;
-  top: 22px;
-  cursor: pointer;
-  padding: 10px 35px 16px 0px;
-}
-#nav-toggle span,
-#nav-toggle span:before,
-#nav-toggle span:after {
-  cursor: pointer;
-  border-radius: 1px;
-  height: 5px;
-  width: 35px;
-  background: #ffffff;
-  position: absolute;
-  display: block;
-  content: '';
-  transition: all 300ms ease-in-out;
-}
-#nav-toggle span:before {
-  top: -10px;
-}
-#nav-toggle span:after {
-  bottom: -10px;
-}
-#nav-toggle.active span {
-  background-color: transparent;
-}
-#nav-toggle.active span:before, #nav-toggle.active span:after {
-  top: 0;
-}
-#nav-toggle.active span:before {
-  transform: rotate(45deg);
-}
-#nav-toggle.active span:after {
-  transform: rotate(-45deg);
-}
- 
-article {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 10px;
-}
-    </style>
+
     <!-- Bootstrap Core CSS -->
-    <link href="{{ asset('home/asset/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="asset/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Font Awesome CSS -->
-    <link href="{{ asset('home/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
     
     
     <!-- Animate CSS -->
-    <link href="{{ asset('home/css/animate.css') }}" rel="stylesheet" >
+    <link href="css/animate.css" rel="stylesheet" >
     
     <!-- Owl-Carousel -->
-    <link rel="stylesheet" href="{{ asset('home/css/owl.carousel.css') }}" >
-    <link rel="stylesheet" href="{{ asset('home/css/owl.theme.css') }}" >
-    <link rel="stylesheet" href="{{ asset('home/css/owl.transitions.css') }}" >
+    <link rel="stylesheet" href="css/owl.carousel.css" >
+    <link rel="stylesheet" href="css/owl.theme.css" >
+    <link rel="stylesheet" href="css/owl.transitions.css" >
 
     <!-- Custom CSS -->
-    <link href="{{ asset('home/css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('home/css/responsive.css') }}" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
     
     <!-- Colors CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/css/color/green.css') }}">
+    <link rel="stylesheet" type="text/css" href="css/color/green.css">
     
     
     
     <!-- Colors CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/css/color/green.css') }}" title="green">
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/css/color/light-red.css') }}" title="light-red">
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/css/color/blue.css') }}" title="blue">
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/css/color/light-blue.css') }}" title="light-blue">
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/css/color/yellow.css') }}" title="yellow">
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/css/color/light-green.css') }}" title="light-green">
+    <link rel="stylesheet" type="text/css" href="css/color/green.css" title="green">
+    <link rel="stylesheet" type="text/css" href="css/color/light-red.css" title="light-red">
+    <link rel="stylesheet" type="text/css" href="css/color/blue.css" title="blue">
+    <link rel="stylesheet" type="text/css" href="css/color/light-blue.css" title="light-blue">
+    <link rel="stylesheet" type="text/css" href="css/color/yellow.css" title="yellow">
+    <link rel="stylesheet" type="text/css" href="css/color/light-green.css" title="light-green">
 
     <!-- Custom Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
     
     
     <!-- Modernizer js -->
-    <script src="{{asset('home/js/modernizr.custom.js') }}"></script>
+    <script src="js/modernizr.custom.js"></script>
 
     
     <!--[if lt IE 9]>
@@ -247,68 +81,65 @@ article {
 ================================================== -->
 
     <!-- Navigation -->
-    <section class="nav-bar">
-  <div class="nav-container">
-    <div class="brand">
-      <a href="https://webdevtrick.com/"><img src="https://webdevtrick.com/wp-content/uploads/logo-fb-1.png"></a>
-    </div>
-    <nav>
-      <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
-      <ul class="nav-list">
-        <li>
-          <a href="#">Home</a>
-        </li>
-        <!-- <li>
-          <a href="#">Web Design</a>
-        </li> -->
-        <li>
-            <a href="#">Pelatihan</a>
-            <ul class="nav-dropdown">
-                    <li><a href="#">Modul & Kurikulum</a></li>
-                    <li><a href="#">Kalender & Pelatihan</a></li>
-                    <li><a href="#">Analisa Laporan Pelatihan</a></li>
-             </ul>
-        </li>
-        <li>
-            <a href="#">Pelaksanaan</a>
-            <ul class="nav-dropdown">
-                    <li><a href="{{route('login')}}">Registrasi Peserta</a></li>
-                    <li><a href="#">Sertivikasi Pelatihan</a></li>
-                    <li><a href="#">Alumni</a></li>
-             </ul>
-        </li>
-        <li>
-            <a href="#">Evaluasi</a>
-            <ul class="nav-dropdown">
-                    <li><a href="#">Evaluasi Pelatihan</a></li>
-                    <li><a href="#">Evaluasi Pasca Pelatihan</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#pricing">BLC</a>
-        </li>
-        <li>
-            <a href="#">Jabatan & Kompetensi</a>
-        </li>
-        
-        <li>
-            <a href="#pricing">Silaba</a>
-        </li>
-        <li>
-            <a class="page-scroll" href="#latest-news">Login</a>
-        </li>
-        <li><a href="#">Pelatihan</a>
-            <ul class="nav-dropdown">
-            <li><a href="#">Modul & Kurikulum</a></li>
-            <li><a href="#">Kalender Pelatihan</a></li>
-            <li><a href="{{route('login')}}">Analisa Laporan Pelatihan</a></li>
-            </ul>
-        </li>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">Fame</a>
+            </div>
 
-      </ul>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#feature">Feature</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#portfolio">Portfolio</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about-us">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#service">Services</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#team">Team</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#pricing">Pricing</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#latest-news">Latest News</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#testimonial">Testimonials</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#partner">Partner</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
     </nav>
-  </div>
-</section>
+
+    
+    
+    
     <!-- Start Home Page Slider -->
     <section id="page-top">
         <!-- Carousel -->
@@ -324,8 +155,8 @@ article {
 
             <!-- Carousel inner -->
             <div class="carousel-inner">
-                <!-- <div class="item active">
-                    <img class="img-responsive" src="{{ asset('home/images/header-bg-1.jpg ')}}" alt="slider">
+                <div class="item active">
+                    <img class="img-responsive" src="images/header-bg-1.jpg" alt="slider">
                     <div class="slider-content">
                         <div class="col-md-12 text-center">
                             <h1 class="animated3">
@@ -335,21 +166,13 @@ article {
                             <a href="#feature" class="page-scroll btn btn-primary animated1">Read More</a>
                         </div>
                     </div>
-                </div> -->
+                </div>
                 <!--/ Carousel item end -->
-                <?php $i = 0;$active = '' ?>
-                @foreach($carousels as $carousel)
-                <?php if($i == 0) {
-                  $active='active';
-                }else {
-                  $active = '';
-                }
-                $i++;
-                ?>
-                <div class="item {{$active}}">
-                    <img class="img-responsive" src="{{  asset('/img/'.$carousel->image) }}" alt="slider">
-                    <p>$carousel->image</p>
-                    <!-- <div class="slider-content">
+                
+                <div class="item">
+                    <img class="img-responsive" src="images/header-back.png" alt="slider">
+                    
+                    <div class="slider-content">
                         <div class="col-md-12 text-center">
                             <h1 class="animated1">
                     		  <span>Welcome to <strong>Fame</strong></span>
@@ -357,9 +180,24 @@ article {
                             <p class="animated2">Generate a flood of new business with the<br> power of a digital media platform</p>
                             <a href="#feature" class="page-scroll btn btn-primary animated3">Read More</a>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
-                @endforeach
+                <!--/ Carousel item end -->
+                
+                <div class="item">
+                    <img class="img-responsive" src="images//galaxy.jpg" alt="slider">
+                    <div class="slider-content">
+                        <div class="col-md-12 text-center">
+                            <h1 class="animated2">
+                                <span>The way of <strong>Success</strong></span>
+                            </h1>
+                            <p class="animated1">At vero eos et accusamus et iusto odio dignissimos<br> ducimus qui blanditiis praesentium voluptatum</p>	
+                             <a class="animated3 slider btn btn-primary btn-min-block" href="#">Get Now</a><a class="animated3 slider btn btn-default btn-min-block" href="#">Live Demo</a>
+                                
+                        </div>
+                    </div>
+                </div>
+                <!--/ Carousel item end -->
             </div>
             <!-- Carousel inner end-->
 
@@ -390,7 +228,7 @@ article {
                 <div class="latest-news">
                     <div class="col-md-12">
                         <div class="latest-post">
-                            <img src="{{ asset('home/images/about-01.jpg') }}" class="img-responsive" alt="">
+                            <img src="images/about-01.jpg" class="img-responsive" alt="">
                             <h4><a href="#">Standard Post with Image</a></h4>
                             <div class="post-details">
                                 <span class="date"><strong>31</strong> <br>Dec , 2014</span>
@@ -402,7 +240,7 @@ article {
                     </div>
                     <div class="col-md-12">
                         <div class="latest-post">
-                            <img src="{{ asset('home/images/about-02.jpg') }}" class="img-responsive" alt="">
+                            <img src="images/about-02.jpg" class="img-responsive" alt="">
                             <h4><a href="#">Standard Post with Image</a></h4>
                             <div class="post-details">
                                 <span class="date"><strong>17</strong> <br>Feb , 2014</span>
@@ -414,7 +252,7 @@ article {
                     </div>
                     <div class="col-md-12">
                         <div class="latest-post">
-                            <img src="{{ asset('home/images/about-03.jpg') }}" class="img-responsive" alt="">
+                            <img src="images/about-03.jpg" class="img-responsive" alt="">
                             <h4><a href="#">Standard Post with Image</a></h4>
                             <div class="post-details">
                                 <span class="date"><strong>08</strong> <br>Aug , 2014</span>
@@ -426,7 +264,7 @@ article {
                     </div>
                     <div class="col-md-12">
                         <div class="latest-post">
-                            <img src="{{ asset('home/images/about-01.jpg') }}" class="img-responsive" alt="">
+                            <img src="images/about-01.jpg" class="img-responsive" alt="">
                             <h4><a href="#">Standard Post with Image</a></h4>
                             <div class="post-details">
                                 <span class="date"><strong>08</strong> <br>Aug , 2014</span>
@@ -438,7 +276,7 @@ article {
                     </div>
                     <div class="col-md-12">
                         <div class="latest-post">
-                            <img src="{{ asset('home/images/about-02.jpg') }}" class="img-responsive" alt="">
+                            <img src="images/about-02.jpg" class="img-responsive" alt="">
                             <h4><a href="#">Standard Post with Image</a></h4>
                             <div class="post-details">
                                 <span class="date"><strong>08</strong> <br>Aug , 2014</span>
@@ -450,7 +288,7 @@ article {
                     </div>
                     <div class="col-md-12">
                         <div class="latest-post">
-                            <img src="{{ asset('home/images/about-03.jpg') }}" class="img-responsive" alt="">
+                            <img src="images/about-03.jpg" class="img-responsive" alt="">
                             <h4><a href="#">Standard Post with Image</a></h4>
                             <div class="post-details">
                                 <span class="date"><strong>08</strong> <br>Aug , 2014</span>
@@ -465,19 +303,50 @@ article {
         </div>
     </section>
     <!-- End Latest News Section -->
+
+
+
+    
+    
+    
     <!-- Start Testimonial Section -->
     <div id="testimonial" class="testimonial-section">
         <div class="container">
             <!-- Start Testimonials Carousel -->
             <div id="testimonial-carousel" class="testimonials-carousel">
-                <!-- Testimonial content -->
-                @foreach($setting as $s)
+                <!-- Testimonial 1 -->
                 <div class="testimonials item">
                     <div class="testimonial-content">
-                        <p>{{$s->pengumuman}}</p>
+                        <img src="images/testimonial/face_1.png" alt="" >
+                        <div class="testimonial-author">
+                            <div class="author">John Doe</div>
+                            <div class="designation">Organization Founder</div>
+                        </div>
+                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque<br> laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore.</p>
                     </div>
                 </div>
-                @endforeach
+                <!-- Testimonial 2 -->
+                <div class="testimonials item">
+                    <div class="testimonial-content">
+                        <img src="images/testimonial/face_2.png" alt="" >
+                        <div class="testimonial-author">
+                            <div class="author">Jane Doe</div>
+                            <div class="designation">Lead Developer</div>
+                        </div>
+                        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia<br> consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                    </div>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="testimonials item">
+                    <div class="testimonial-content">
+                        <img src="images/testimonial/face_3.png" alt="" >
+                        <div class="testimonial-author">
+                            <div class="author">John Doe</div>
+                            <div class="designation">Honorable Customer</div>
+                        </div>
+                        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit<br> anim laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    </div>
+                </div>
             </div>
             <!-- End Testimonials Carousel -->
         </div>
@@ -501,43 +370,43 @@ article {
                 <div class="clients">
                     
                     <div class="col-md-12">
-                        <img src="{{ asset('home/images/logos/themeforest.jpg') }}" class="img-responsive" alt="...">
+                        <img src="images/logos/themeforest.jpg" class="img-responsive" alt="...">
                     </div>
                     
                     <div class="col-md-12">
-                        <img src="{{ asset('home/images/logos/creative-market.jpg') }}" class="img-responsive" alt="...">
+                        <img src="images/logos/creative-market.jpg" class="img-responsive" alt="...">
                     </div>
                     
                     <div class="col-md-12">
-                        <img src="{{ asset('home/images/logos/designmodo.jpg') }}" class="img-responsive" alt="...">
+                        <img src="images/logos/designmodo.jpg" class="img-responsive" alt="...">
                     </div>
                     
                     <div class="col-md-12">
-                        <img src="{{ asset('home/images/logos/creative-market.jpg') }}" class="img-responsive" alt="...">
+                        <img src="images/logos/creative-market.jpg" class="img-responsive" alt="...">
                     </div>
                     
                     <div class="col-md-12">
-                        <img src="{{ asset('home/images/logos/microlancer.jpg') }}" class="img-responsive" alt="...">
+                        <img src="images/logos/microlancer.jpg" class="img-responsive" alt="...">
                     </div>
                     
                     <div class="col-md-12">
-                        <img src="{{ asset('home/images/logos/themeforest.jpg') }}" class="img-responsive" alt="...">
+                        <img src="images/logos/themeforest.jpg" class="img-responsive" alt="...">
                     </div>
                     
                     <div class="col-md-12">
-                        <img src="{{ asset('home/images/logos/microlancer.jpg') }}" class="img-responsive" alt="...">
+                        <img src="images/logos/microlancer.jpg" class="img-responsive" alt="...">
                     </div>
                     
                     <div class="col-md-12">
-                        <img src="{{ asset('home/images/logos/designmodo.jpg') }}" class="img-responsive" alt="...">
+                        <img src="images/logos/designmodo.jpg" class="img-responsive" alt="...">
                     </div>
                     
                     <div class="col-md-12">
-                        <img src="{{ asset('home/images/logos/creative-market.jpg') }}" class="img-responsive" alt="...">
+                        <img src="images/logos/creative-market.jpg" class="img-responsive" alt="...">
                     </div>
                     
                     <div class="col-md-12">
-                        <img src="{{ asset('home/images/logos/designmodo.jpg') }}" class="img-responsive" alt="...">
+                        <img src="images/logos/designmodo.jpg" class="img-responsive" alt="...">
                     </div>
                     
                 </div>
@@ -556,48 +425,27 @@ article {
     
 
     <!-- jQuery Version 2.1.1 -->
-    <script src="{{asset('home/js/jquery-2.1.1.min.js') }}"></script>
+    <script src="js/jquery-2.1.1.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="{{asset('home/asset/js/bootstrap.min.js') }}"></script>
+    <script src="asset/js/bootstrap.min.js"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="{{asset('home/js/jquery.easing.1.3.js') }}"></script>
-    <script src="{{asset('home/js/classie.js') }}"></script>
-    <script src="{{asset('home/js/count-to.js') }}"></script>
-    <script src="{{asset('home/js/jquery.appear.js') }}"></script>
-    <script src="{{asset('home/js/cbpAnimatedHeader.js') }}"></script>
-    <script src="{{asset('home/js/owl.carousel.min.js') }}"></script>
-	<script src="{{asset('home/js/jquery.fitvids.js') }}"></script>
-	<script src="{{asset('home/js/styleswitcher.js') }}"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/count-to.js"></script>
+    <script src="js/jquery.appear.js"></script>
+    <script src="js/cbpAnimatedHeader.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.fitvids.js"></script>
+	<script src="js/styleswitcher.js"></script>
 
     <!-- Contact Form JavaScript -->
-    <script src="{{asset('home/js/jqBootstrapValidation.js') }}"></script>
-    <script src="{{asset('home/js/contact_me.js') }}"></script>
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="{{asset('home/js/script.js') }}"></script>
-    <script>
-    
-    (function($) { 
-  $(function() { 
-    $('nav ul li a:not(:only-child)').click(function(e) {
-      $(this).siblings('.nav-dropdown').toggle();
-      $('.dropdown').not($(this).siblings()).hide();
-      e.stopPropagation();
-    });
-    $('html').click(function() {
-      $('.nav-dropdown').hide();
-    });
-    $('#nav-toggle').click(function() {
-      $('nav ul').slideToggle();
-    });
-    $('#nav-toggle').on('click', function() {
-      this.classList.toggle('active');
-    });
-  }); 
-})(jQuery);
-    </script>
+    <script src="js/script.js"></script>
 
 </body>
 
