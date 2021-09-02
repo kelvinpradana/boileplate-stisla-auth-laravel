@@ -82,19 +82,40 @@ class LaporanController extends Controller
 
     public function print(Request $request, $id)
     {
-        $pelatihan = DB::table('transaksis as t')
-        ->select('sub_diklats.nama as pelatihan','diklats.nama as nama_diklat','t.jumlah','t.tahun',
-        'users.name as nama_user','users.kanwil_id','kanwils.nama as kanwil','upts.nama as upt','users.nik'
-        )
-        ->leftJoin('sub_diklats','sub_diklats.id','t.sub_diklat_id')
-        ->leftJoin('diklats','diklats.id','t.diklat_id')
-        ->leftJoin('users','users.id','t.user_id')
-        ->leftJoin('kanwils','kanwils.id','users.kanwil_id')
-        ->leftJoin('upts','upts.id','users.upt_id')
-        ->where('t.status','1')
-        ->where('t.diklat_id',$id)
-        ->get();
-        $pdf = PDF::loadview('laporan.laporan_pdf',['pelatihan'=>$pelatihan]);
+        $tahun = prolat::where('status',1)->first();
+        $pelatihan = '';
+        $usulan = '';
+        if($id == 'all' || $id != 'usulan'){
+            $pelatihan = DB::table('transaksis as t')
+                ->select('sub_diklats.nama as pelatihan','diklats.nama as nama_diklat','t.jumlah','t.tahun',
+                'users.name as nama_user','users.kanwil_id','kanwils.nama as kanwil','upts.nama as upt','users.nik'
+                )
+                ->leftJoin('sub_diklats','sub_diklats.id','t.sub_diklat_id')
+                ->leftJoin('diklats','diklats.id','t.diklat_id')
+                ->leftJoin('users','users.id','t.user_id')
+                ->leftJoin('kanwils','kanwils.id','users.kanwil_id')
+                ->leftJoin('upts','upts.id','users.upt_id')
+                ->where('t.status','1');
+                if($id != 'all'){
+                    $pelatihan->where('t.diklat_id',$id);
+                }
+                $pelatihan->where('tahun',$tahun->tahun)->get();
+        }
+        if($id == 'usulan' || $id == 'all'){
+            $usulan = DB::table('usulans as t')
+                ->select('t.jumlah','t.tahun',
+                    'users.name as nama_user','users.kanwil_id','kanwils.nama as kanwil',
+                    'upts.nama as upt','users.nik','t.usulan'
+                )
+                ->leftJoin('users','users.id','t.user_id')
+                ->leftJoin('kanwils','kanwils.id','users.kanwil_id')
+                ->leftJoin('upts','upts.id','users.upt_id')
+                ->where('t.status','1')
+                ->where('tahun',$tahun->tahun)
+                ->get();
+        }
+        
+        $pdf = PDF::loadview('laporan.laporan_pdf',['pelatihan'=>$pelatihan,'id'=>$id,'usulan'=>$usulan]);
         return $pdf->stream('laporan.pdf');
 	    // return $pdf->download('laporan-pdf');
     }

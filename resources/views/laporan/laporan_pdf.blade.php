@@ -1,44 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Membuat Laporan PDF Dengan DOMPDF Laravel</title>
+	<title>Laporan Pelatihan</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 
 	<div class="container">
-		<center>
-			<h4>Laporan Pelatihan</h4>
-		</center>
 		<br/>
-		<table class='table table-bordered'>
-			<thead>
-				<tr>
-					<th>No</th>
-					<th>Nama</th>
-                    <th>Kanwil</th>
-                    <th>Upt</th>
-                    <th>Diklat</th>
-                    <th>Pelatiahan</th>
-                    <th>Jumlah Peserta</th>
-				</tr>
-			</thead>
-			<tbody>
-				@php $i=1 @endphp
-				@foreach($pelatihan as $p)
-				<tr>
-					<td>{{ $i++ }}</td>
-					<td>{{$p->nama_user}}</td>
-                    <td>{{$p->kanwil}}</td>
-                    <td>{{$p->upt}}</td>
-                    <td>{{$p->nama_diklat}}</td>
-                    <td>{{$p->pelatihan}}</td>
-                    <td>{{$p->jumlah}}</td>
-				</tr>
-				@endforeach
-			</tbody>
-		</table>
-
+		@if($id == 'all' || $id != 'usulan')
+		@include('laporan.include.pelatihan')
+		@endif
+		@if($id == 'all' || $id == 'usulan')
+		@include('laporan.include.usulan')
+		@endif
 	</div>
 
 </body>
