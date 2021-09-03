@@ -12,7 +12,7 @@
     <title>Fame - One Page Multipurpose Bootstrap Theme</title>
     <style>
 .nav-bar {
-  height: 70px;
+  height: 90px;
   background: #262626;
 }
  
@@ -23,7 +23,8 @@
   line-height: 70px;
   text-transform: uppercase;
   font-size: 1.4em;
-  /* margin-left: 100px; */
+  margin-top: 5px;
+  margin-left: 100px;
 }
 .brand a img {
  max-height: 70px;
@@ -34,10 +35,9 @@
   text-decoration: none;
 }
  
-.nav-container {
-  max-width: 1000px;
+/* .nav-container {
   margin: 0 auto;
-}
+} */
  
 nav {
   float: right;
@@ -170,12 +170,6 @@ nav ul li ul li a {
 #nav-toggle.active span:after {
   transform: rotate(-45deg);
 }
- 
-article {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 10px;
-}
     </style>
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('home/asset/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -295,9 +289,9 @@ article {
             <a href="#pricing">Silaba</a>
         </li>
         <li>
-            <a class="page-scroll" href="#latest-news">Login</a>
+            <a href="{{route('login')}}">Login</a>
         </li>
-        <li><a href="#">Pelatihan</a>
+        <li><a href="#">Pelaksanaan Pelatihan</a>
             <ul class="nav-dropdown">
             <li><a href="#">Modul & Kurikulum</a></li>
             <li><a href="#">Kalender Pelatihan</a></li>
@@ -580,23 +574,25 @@ article {
     <script>
     
     (function($) { 
-  $(function() { 
-    $('nav ul li a:not(:only-child)').click(function(e) {
-      $(this).siblings('.nav-dropdown').toggle();
-      $('.dropdown').not($(this).siblings()).hide();
-      e.stopPropagation();
-    });
-    $('html').click(function() {
-      $('.nav-dropdown').hide();
-    });
-    $('#nav-toggle').click(function() {
-      $('nav ul').slideToggle();
-    });
-    $('#nav-toggle').on('click', function() {
-      this.classList.toggle('active');
-    });
-  }); 
-})(jQuery);
+        $(function() { 
+			$('nav ul li a:not(:only-child)').click(function(e) {
+				$('.nav-dropdown').hide();
+				$(this).siblings('.nav-dropdown').toggle();
+				$('.dropdown').not($(this).siblings()).hide();
+				e.stopPropagation();
+				
+			});
+			$('html').click(function() {
+				$('.nav-dropdown').hide();
+			});
+			$('#nav-toggle').click(function() {
+				$('nav ul').slideToggle();
+			});
+			$('#nav-toggle').on('click', function() {
+				this.classList.toggle('active');
+			});
+        }); 
+    })(jQuery);
     </script>
 
 </body>
