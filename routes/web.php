@@ -20,7 +20,7 @@ use App\setting;
 Route::get('/', function () {
     $prolat = prolat::where('status',1)->first();
     $carousels = carousel::all();
-    $setting = setting::get();
+    $setting = setting::first();
     return view('welcome',compact('prolat','carousels','setting'));
 });
 
@@ -30,7 +30,7 @@ Route::middleware('guest')->group(function () {
 });
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/homes', 'HomeController@index')->name('home');
 
 Route::get('/upts', 'Auth\RegisterController@get_upt')->name('kanwils.upt');
 
