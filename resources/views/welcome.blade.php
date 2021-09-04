@@ -84,7 +84,7 @@ Fixed Navigation
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Pelakasanaan Pelatihan </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Registrasi Peserta Pelatihan</a>
+                  <a class="dropdown-item" href="{{route('register')}}">Registrasi Peserta Pelatihan</a>
                   <a class="dropdown-item" href="#">Sertifikasi Pelatihan</a>
                   <a class="dropdown-item" href="#">Alumni</a>
                 </div>

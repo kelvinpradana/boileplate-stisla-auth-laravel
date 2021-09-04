@@ -12,6 +12,7 @@
 
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="{{ asset('node_modules/izitoast/dist/css/iziToast.min.css') }} ">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/logo.png')}}" />
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
