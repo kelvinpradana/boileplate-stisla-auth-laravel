@@ -58,30 +58,29 @@ class BeritaController extends Controller
         }
 
         $description = $dom->saveHTML();
-        // $this->validate($request, [
-		// 	'img' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
-		// 	'keterangan' => 'required',
-		// ]);
+        $this->validate($request, [
+			'img' => 'file|image|mimes:jpeg,png,jpg|max:2048',
+		]);
  
-		// // menyimpan data file yang diupload ke variabel $file
-		// $file = $request->file('img');
+		// menyimpan data file yang diupload ke variabel $file
+		$file = $request->file('img');
  
-		// $nama_file = time()."_".$file->getClientOriginalName();
+		$nama_file = time()."_".$file->getClientOriginalName();
  
       	// isi dengan nama folder tempat kemana file diupload
-		// $tujuan_upload = 'berita';
-		// $file->move($tujuan_upload,$nama_file);
+		$tujuan_upload = 'berita';
+		$file->move($tujuan_upload,$nama_file);
 
         berita::create([
             'judul' => $request->judul,
             'status' => $request->status,
-            'isi' => $request->isi,
+            'isi' => $description,
             'tanggal' => $request->tanggal,
             'user_id' => 1,
             'user_update' => '1',
-            // 'img' => $nama_file,
+            'img' => $nama_file,
         ]);
-        return redirect()->back();
+        return redirect()->route('beritas.index');
     }
 
     /**
@@ -103,7 +102,8 @@ class BeritaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = berita::find($id);
+        return view('berita.edit',compact('data'));
     }
 
     /**
@@ -126,6 +126,19 @@ class BeritaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $id;
+        $data = berita::find($id);
+        $data->delete();
+        return redirect()->route('beritas.index');
+
+    }
+
+    public function hapus($id)
+    {
+        return $id;
+        $data = berita::find($id);
+        $data->delete();
+        return redirect()->route('beritas.index');
+
     }
 }

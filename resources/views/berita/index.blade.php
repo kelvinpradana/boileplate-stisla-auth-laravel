@@ -47,7 +47,10 @@
                                 @else 
                                     <td>Draft</td>
                                 @endif
-                                <td{!! $berita->isi !!}</td>
+                                <td>
+                                    <a class="badge badge-success" href="{{route('beritas.edit',$berita->id )}}" ><span class="fas fa-fw fa-edit"></span></a>
+                                    <a href="/beritaD/{{$berita->id}}" class="badge badge-danger" class="" ><span class="fas fa-fw fa-trash"></span></a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

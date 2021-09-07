@@ -156,5 +156,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/beritas','BeritaController');
 
+    Route::get('berita/delete/{$id}','BeritaController@hapus');
+
 });
 
