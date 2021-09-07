@@ -36,15 +36,15 @@ class BeritaController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-			'img' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
-			'keterangan' => 'required',
-		]);
+        // $this->validate($request, [
+		// 	'img' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+		// 	'keterangan' => 'required',
+		// ]);
  
-		// menyimpan data file yang diupload ke variabel $file
-		$file = $request->file('img');
+		// // menyimpan data file yang diupload ke variabel $file
+		// $file = $request->file('img');
  
-		$nama_file = time()."_".$file->getClientOriginalName();
+		// $nama_file = time()."_".$file->getClientOriginalName();
  
       	// isi dengan nama folder tempat kemana file diupload
 		// $tujuan_upload = 'berita';
@@ -55,7 +55,7 @@ class BeritaController extends Controller
             'status' => $request->status,
             'isi' => $request->isi,
             'tanggal' => $request->tanggal,
-            'img' => $nama_file,
+            // 'img' => $nama_file,
         ]);
         return redirect()->back();
     }
