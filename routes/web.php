@@ -154,7 +154,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/', 'SettingController@store');
     });
 
-    Route::resource('/berita','BeritaController');
+    Route::resource('/beritas','BeritaController');
 
 });
 

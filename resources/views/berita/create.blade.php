@@ -25,7 +25,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <form action="{{route('berita.store')}}" method="post" enctype="multipart/form-data">
+            <form action="{{route('beritas.store')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                     <div class="form-group row mb-4">

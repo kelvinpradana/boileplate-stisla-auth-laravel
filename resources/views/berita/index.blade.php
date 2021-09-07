@@ -22,7 +22,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <a href="{{route('berita.create')}}" class="btn btn-md btn-primary"><i class='fa fa-plus'></i>&nbsp;Tambah</a>
+                <a href="{{route('beritas.create')}}" class="btn btn-md btn-primary"><i class='fa fa-plus'></i>&nbsp;Tambah</a>
                 <div class="table-responsive mt-4">
                     <table class="table table-striped table-bordered" id="table-data">
                         <thead>
@@ -47,6 +47,7 @@
                                 @else 
                                     <td>Draft</td>
                                 @endif
+                                <td{!! $berita->isi !!}</td>
                             </tr>
                             @endforeach
                         </tbody>
