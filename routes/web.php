@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\prolat;
 use App\setting;
+use phpDocumentor\Reflection\Types\Resource_;
 
 /*
 |--------------------------------------------------------------------------
@@ -152,6 +153,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/', 'SettingController@destroy')->name('.delete');
         Route::post('/', 'SettingController@store');
     });
+
+    Route::resource('/berita','BeritaController');
 
 });
 

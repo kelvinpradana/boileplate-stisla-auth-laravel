@@ -38,6 +38,7 @@
         @if(auth::user()->level == '1' || auth::user()->level == '0' )  
             <li class="{{ (request()->is('transaksi')) ? 'active' : '' }}"><a class="nav-link" href="{{route('transaksi')}}"><i class="fa fa-graduation-cap"></i> <span>Pelatihan</span></a></li>
             <li class="{{ (request()->is('transaksi/history')) ? 'active' : '' }}"><a class="nav-link" href="{{route('transaksi.history')}}"><i class="fa fa-history"></i> <span>History</span></a></li>
-        @endif            
+        @endif 
+        <li class="{{ (request()->is('berita')) ? 'active' : '' }}"><a class="nav-link" href="{{route('berita.index')}}"><i class="fa fa-graduation-cap"></i> <span>Berita</span></a></li>          
     </aside>
 </div>
