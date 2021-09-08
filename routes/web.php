@@ -1,5 +1,6 @@
 <?php
 
+use App\berita;
 use App\carousel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
@@ -22,7 +23,8 @@ Route::get('/', function () {
     $prolat = prolat::where('status',1)->first();
     $carousels = carousel::all();
     $setting = setting::first();
-    return view('welcome',compact('prolat','carousels','setting'));
+    $beritas = berita::where('status',1)->take(3);
+    return view('welcome',compact('prolat','carousels','setting','beritas'));
 });
 
 Route::middleware('guest')->group(function () {
