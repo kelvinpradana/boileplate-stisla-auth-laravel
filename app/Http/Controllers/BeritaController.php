@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\berita;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BeritaController extends Controller
 {
@@ -58,25 +59,28 @@ class BeritaController extends Controller
         }
 
         $description = $dom->saveHTML();
-        $this->validate($request, [
-			'img' => 'file|image|mimes:jpeg,png,jpg|max:2048',
-		]);
- 
-		// menyimpan data file yang diupload ke variabel $file
-		$file = $request->file('img');
- 
-		$nama_file = time()."_".$file->getClientOriginalName();
- 
-      	// isi dengan nama folder tempat kemana file diupload
-		$tujuan_upload = 'berita';
-		$file->move($tujuan_upload,$nama_file);
+        $nama_file = '';
+        if($request->has('img')){
 
+            $this->validate($request, [
+                'img' => 'file|image|mimes:jpeg,png,jpg|max:2048',
+            ]);
+    
+            // menyimpan data file yang diupload ke variabel $file
+            $file = $request->file('img');
+    
+            $nama_file = time()."_".$file->getClientOriginalName();
+    
+            // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'berita';
+            $file->move($tujuan_upload,$nama_file);
+        }
         berita::create([
             'judul' => $request->judul,
             'status' => $request->status,
             'isi' => $description,
             'tanggal' => $request->tanggal,
-            'user_id' => 1,
+            'user_id' => Auth::user()->id,
             'user_update' => '1',
             'img' => $nama_file,
         ]);
@@ -115,7 +119,57 @@ class BeritaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // return $request->status;    
+        $description=$request->input('isi');
+        $dom = new \DomDocument();
+        $dom->loadHtml($description, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
+        $images = $dom->getElementsByTagName('img');
+
+        foreach($images as $k => $img){
+            $data = $img->getAttribute('src');
+
+            list($type, $data) = explode(';', $data);
+            list(, $data)      = explode(',', $data);
+            $data = base64_decode($data);
+
+            $image_name= "/img/" . time().$k.'.png';
+            $path = public_path() . $image_name;
+
+            file_put_contents($path, $data);
+            
+            $img->removeAttribute('src');
+            $img->setAttribute('src', $image_name);
+        }
+
+        $description = $dom->saveHTML();
+        $nama_file = $request->img_e;
+        if($request->has('img')){
+
+            $this->validate($request, [
+                'img' => 'file|image|mimes:jpeg,png,jpg|max:2048',
+            ]);
+    
+            // menyimpan data file yang diupload ke variabel $file
+            $file = $request->file('img');
+    
+            $nama_file = time()."_".$file->getClientOriginalName();
+    
+            // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'berita';
+            $file->move($tujuan_upload,$nama_file);
+        }
+        $data = berita::find($id);
+
+        $data->update([
+            'judul' => $request->judul,
+            'status' => $request->status,
+            'isi' => $description,
+            'tanggal' => $request->tanggal,
+            'user_id' => Auth::user()->id,
+            'user_update' => Auth::user()->id,
+            'img' => $nama_file,
+        ]);
+        return redirect()->route('beritas.index');
     }
 
     /**
@@ -135,7 +189,6 @@ class BeritaController extends Controller
 
     public function hapus($id)
     {
-        return $id;
         $data = berita::find($id);
         $data->delete();
         return redirect()->route('beritas.index');

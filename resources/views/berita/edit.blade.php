@@ -21,12 +21,13 @@
 </style>
 @endsection
 @section('body')
-@section('title','Tambah Berita')
+@section('title','Edit Berita')
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <form action="{{route('beritas.store')}}" method="post" enctype="multipart/form-data">
+            <form action="{{route('beritas.update',$data->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="card-body">
                     <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Judul</label>
@@ -38,28 +39,36 @@
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status</label>
                         <div class="col-sm-12 col-md-7">
                             <select class="form-control selectric" name="status">
-                                <option>Draft</option>
-                                <option>Publish</option>
+                                <option value="0" {{($data->status==0)? "selected":'' }}>Draft</option>
+                                <option value="1" {{($data->status==1)? "selected":'' }}>Publish</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Content</label>
                         <div class="col-sm-12 col-md-7">
-                            <textarea class="summernote" value="{!! $data->isi !!}" name="isi"></textarea>
+                            <textarea class="summernote" name="isi"></textarea>
                         </div>
                     </div>
 
                     <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Tanggal</label>
                         <div class="col-sm-12 col-md-7">
-                            <input type="text"  name="tanggal" class="form-control datepicker">
+                            <input type="text" value="{{$data->tanggal}}"  name="tanggal" class="form-control datepicker">
                         </div>
                     </div>
                     <div class="form-group row mb-4">
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                        <div class="col-sm-12 col-md-7">
+                        <img src="{{asset('berita/'.$data->img)}}" alt="edit img" height="200">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                      
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Gambar</label>
                         <div class="col-sm-12 col-md-7">
                             <input type="file"  name="img" class="form-control">
+                            <input type="hidden" name="img_e" value="{{$data->img}}" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row mb-4">
@@ -77,6 +86,10 @@
 
 @section('bottom-script')
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script ssrc="{{asset('/node_modules/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+<script src="{{ asset('node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <!-- <script src="{{asset('/node_modules/summernote/summernote-bs4.js')}}"></script> -->
+<script>
+           var isi = `<?php echo $data->isi; ?>`;
+           $('.summernote').summernote('code', isi);
+        </script>
 @endsection

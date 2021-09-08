@@ -29,41 +29,41 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group row mb-4">
-                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Judul</label>
-                        <div class="col-sm-12 col-md-7">
+                        <label class="col-form-label text-md-right col-12 col-md-2 col-lg-2">Judul</label>
+                        <div class="col-sm-12 col-md-9">
                             <input type="text"  name="judul" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status</label>
-                        <div class="col-sm-12 col-md-7">
+                        <label class="col-form-label text-md-right col-12 col-md-2 col-lg-2">Status</label>
+                        <div class="col-sm-12 col-md-9">
                             <select class="form-control selectric" name="status">
-                                <option>Draft</option>
-                                <option>Publish</option>
+                                <option value="0">Draft</option>
+                                <option value="1">Publish</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Content</label>
-                        <div class="col-sm-12 col-md-7">
+                        <label class="col-form-label text-md-right col-12 col-md-2 col-lg-2">Content</label>
+                        <div class="col-sm-12 col-md-9">
                             <textarea class="summernote" name="isi"></textarea>
                         </div>
                     </div>
 
                     <div class="form-group row mb-4">
-                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Tanggal</label>
-                        <div class="col-sm-12 col-md-7">
+                        <label class="col-form-label text-md-right col-12 col-md-2 col-lg-2">Tanggal</label>
+                        <div class="col-sm-12 col-md-9">
                             <input type="text"  name="tanggal" class="form-control datepicker">
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Gambar</label>
-                        <div class="col-sm-12 col-md-7">
+                        <label class="col-form-label text-md-right col-12 col-md-2 col-lg-2">Gambar</label>
+                        <div class="col-sm-12 col-md-9">
                             <input type="file"  name="img" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row mb-4">
-                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                        <label class="col-form-label text-md-right col-12 col-md-2 col-lg-2"></label>
                         <div class="col-sm-12 col-md-7">
                             <button class="btn btn-primary">Submit</button>
                         </div>
@@ -77,6 +77,6 @@
 
 @section('bottom-script')
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script ssrc="{{asset('/node_modules/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+<script src="{{ asset('node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <!-- <script src="{{asset('/node_modules/summernote/summernote-bs4.js')}}"></script> -->
 @endsection
