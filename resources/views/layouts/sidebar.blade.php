@@ -1,7 +1,8 @@
 <div class="main-sidebar">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">Kompetensi</a>
+        <img class="logo-default" width="200px" src="{{ asset('assets/img/badiklat.png')}}" alt="logo" />
+
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="index.html">Badiklat</a>

@@ -194,4 +194,12 @@ class BeritaController extends Controller
         return redirect()->route('beritas.index');
 
     }
+
+    public function detail($id)
+    {
+        $data = berita::find($id);
+        $randoms = berita::where('status',1)->orderBy('tanggal','DESC')->take(4)->get();
+        return view('berita.detail',compact('data','randoms'));
+
+    }
 }

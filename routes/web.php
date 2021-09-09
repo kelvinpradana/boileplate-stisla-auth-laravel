@@ -23,7 +23,7 @@ Route::get('/', function () {
     $prolat = prolat::where('status',1)->first();
     $carousels = carousel::all();
     $setting = setting::first();
-    $beritas = berita::where('status',1)->take(3);
+    $beritas = berita::where('status',1)->orderBy('tanggal','DESC')->take(3)->get();
     return view('welcome',compact('prolat','carousels','setting','beritas'));
 });
 
@@ -158,6 +158,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/beritas','BeritaController');
     Route::get('/hapus/berita/{id}/hps', 'BeritaController@hapus')->name('hapus_berita');
+
+    Route::get('/berita/{id}', 'BeritaController@detail')->name('getdetail');
 
 
 });
