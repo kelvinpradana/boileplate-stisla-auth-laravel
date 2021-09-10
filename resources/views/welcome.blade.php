@@ -79,11 +79,11 @@ Fixed Navigation
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="#">Modul & Kurikulum</a>
                 <a class="dropdown-item" href="#">Kalender Pelatihan</a>
-                <a class="dropdown-item" href="#">Analisa Laporan Pelatihan</a>
+                <a class="dropdown-item" href="#">Analisa Kebutuhan Pelatihan</a>
               </div>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Pelakasanaan Pelatihan </a>
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Pelaksanaan Pelatihan </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{{route('register')}}">Registrasi Peserta Pelatihan</a>
                 <a class="dropdown-item" href="#">Sertifikasi Pelatihan</a>
@@ -93,12 +93,15 @@ Fixed Navigation
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Evaluasi Pelatihan </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Evaluasi Pelatihan</a>
+                <a class="dropdown-item" href="#">Evaluasi Penyelenggaraan Pelatihan</a>
                 <a class="dropdown-item" href="#">Evaluasi Pasca Pelatihan</a>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="https://kompetensi.kemenkumham.go.id/">Jabatan & Kompetensi</a>
+              <a class="nav-link" href="http://rumahbelajar.kemenkumham.go.id/">Rumah Belajar</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://kompetensi.kemenkumham.go.id/Kompetensi/jabatanKompetensi">Jabatan & Kompetensi</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="https://lcbadiklat-jateng.kemenkumham.go.id/">BLC</a>
