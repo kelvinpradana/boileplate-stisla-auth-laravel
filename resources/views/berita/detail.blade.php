@@ -232,7 +232,7 @@ End Fixed Navigation
   </div>
   <div class="footer-bottom">
     <h5>Copyright 2016. All rights reserved.</h5>
-    <h6>Design and Developed by <a href="">Themefisher</a></h6>
+    <h6>Design by <a href="">Themefisher</a></h6>
   </div>
 </footer> <!-- end footer -->
 

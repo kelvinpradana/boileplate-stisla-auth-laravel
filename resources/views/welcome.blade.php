@@ -252,7 +252,7 @@ Start About Section
 
     <div class="footer-bottom">
       <h5>Copyright {{date('Y')}} All rights reserved.</h5>
-      <h6>Design and Developed by <a href="">Themefisher</a></h6>
+      <h6>Design by <a href="">Themefisher</a></h6>
     </div>
   </footer>
   <!-- end footer -->
